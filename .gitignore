@@ -20,3 +20,6 @@ yarn-error.log*
 
 # Vercel deployment cache
 .vercel
+
+dist/
+
