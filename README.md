@@ -1,128 +1,58 @@
-# The Digital Atelier — Afshan Sheikh
+# Afshaan Shaikh — Midnight Editorial Portfolio
 
-A completely independent, bespoke personal portfolio website exploring the intersection of creative technology, interface craft, and poetic editorial storytelling.
+A premium editorial personal portfolio website combining the visual aesthetics of a modern creative technology studio with a midnight literary atmosphere.
 
-**Visual Direction:** Concept 02 — Dark Academia / Ink  
-**Core Palette:** Obsidian (`#100F0E`), Dark Walnut (`#211B16`), Deep Brown (`#241E18`), Antique Parchment (`#E8D9BD`), Warm Muted (`#B4A58F`), Antique Gold (`#B99865` / `#D0B17C`).
+**Target Identity:** Afshaan Shaikh  
+**Visual Direction:** Midnight Editorial  
+**Palette:** Deep Midnight (`#0A0B10`), Ink Black (`#11121A`), Charcoal (`#1B1B24`), Warm Ivory (`#F2EADD`), Antique Parchment (`#DED1B9`), Muted Champagne (`#C5A574` / `#DFC499`), Soft Silver (`#AAA8AB`).
 
 ---
 
 ## Architecture & Technology Stack
 
-The site is built with pure, high-performance web standards (HTML5, CSS3, JavaScript ESNext) with zero heavy external dependencies. It loads instantly, delivers pristine typography, and provides smooth, accessible interactions across all modern browsers and viewport sizes.
+The application is built with a modern, high-performance web development stack:
 
-- **Semantic HTML5:** Full landmark layout (`<header>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`), ARIA attributes, and accessible labels.
-- **Modern CSS3:** Custom properties design token system, CSS Grid & Flexbox, smooth transitions, ambient grain filter, and `prefers-reduced-motion` compliance.
-- **Typography:** Google Fonts featuring *Cormorant Garamond* (editorial serif), *Manrope* (humanistic body), *DM Mono* (technical metadata), and *Caveat* (marginalia script).
-- **Client Storage:** IndexedDB (`digital-atelier-local`) for persistent browser-local portrait editing and cropping.
-
----
-
-## File Structure
-
-```
-digital-atelier-portfolio/
-├── .gitignore               # Clean git exclusion rules
-├── ANTIGRAVITY_PROMPT.md    # Master creative specification
-├── README.md                # Documentation and deployment instructions
-├── app.js                   # Client interactions, navigation, filter, and portrait workshop
-├── assets/
-│   └── favicon.svg          # Custom Dark Academia monogram favicon
-├── index.html               # Main portfolio markup and exhibition content
-├── styles.css               # Design tokens, responsive grid, and Dark Academia aesthetic
-└── vercel.json              # Vercel deployment headers and routing
-```
+- **Framework & Language:** React 18 + TypeScript + Vite 6
+- **CSS Architecture:** Custom responsive design token system, CSS Grid, Flexbox, and Bootstrap 5.3 layout foundations
+- **Typography:** Google Fonts featuring *Cormorant Garamond* (editorial serif), *Manrope* (modern sans-serif), *DM Mono* (technical metadata), and *Caveat* (handwritten accents)
+- **Central Configuration:** [`src/data/portfolioData.ts`](./src/data/portfolioData.ts) governs all editable content, projects, skills, journey milestones, certifications, and social links in a single location
+- **Client-Side Image Studio:** In-browser Canvas crop, zoom, and framing with persistent storage
 
 ---
 
-## Running Locally
+## Local Development & Preview
 
-To run and preview the site locally, launch any standard HTTP static server from the project root:
+The Vite development server is configured to run at:
 
-### Option A: Python (Recommended)
 ```bash
-python -m http.server 5173
+npm run dev
 ```
-Then visit [http://localhost:5173](http://localhost:5173) in your browser.
 
-### Option B: Node / npx
+URL: [http://localhost:3000](http://localhost:3000)
+
+### Production Build
 ```bash
-npx serve .
+npm run build
 ```
 
 ---
 
-## Selected Projects & Real Links
+## Sections Included
 
-The initial digital exhibition is seeded with Afshan Sheikh's verified web projects:
-
-1. **Khath & Co.** — [https://khath-and-co.vercel.app/#top](https://khath-and-co.vercel.app/#top)  
-   *A correspondence studio and letter-writing space for thoughtful words, personal notes and meaningful connections.*
-2. **The Artisans Quill** — [https://the-artisans-quill.vercel.app/](https://the-artisans-quill.vercel.app/)  
-   *A creative home for visual works, digital art and the many forms that imagination can take.*
-3. **Scale Link** — [https://scale-link-six.vercel.app/](https://scale-link-six.vercel.app/)  
-   *A link-focused web utility exploring quick actions, clear workflows and a practical interface.*
-4. **Swiftly** — [https://swiftly-five-gold.vercel.app/](https://swiftly-five-gold.vercel.app/)  
-   *A map-based delivery-tracking prototype exploring how location and movement can be made intuitive.*
-
----
-
-## Personalization & Configuration Guide
-
-### 1. Contact Form Email Destination
-By default, direct backend email sending is intentionally unconfigured to prevent sending to dummy or unauthorized addresses. When a visitor submits the form:
-- Form fields are validated client-side.
-- The message is formatted with a subject, sender details, and message body.
-- The prepared message is automatically copied to the visitor's clipboard with confirmation toast feedback.
-
-To configure direct opening of your preferred email client via `mailto`:
-1. Open `app.js`.
-2. Locate line 8:
-   ```javascript
-   const CONTACT_EMAIL = '';
-   ```
-3. Set your valid email address:
-   ```javascript
-   const CONTACT_EMAIL = 'your-email@example.com';
-   ```
-
-### 2. Portrait Workshop Workflow
-The About section includes an interactive portrait workshop:
-- Click **"Edit portrait"** to open the modal studio.
-- Upload any image (JPG, PNG, WebP up to 12 MB).
-- Adjust the Zoom slider (100% – 250%) and Horizontal / Vertical pan sliders.
-- Click **"Save Local Preview"** to crop and save your portrait into your browser's IndexedDB. Your framing persists automatically across page reloads in that browser.
-- Click **"Download cropped portrait asset file"** to export the high-resolution JPEG (`afshan-sheikh-portrait-atelier.jpg`).
-- **To publish worldwide:** Place your exported image into the `assets/` directory (e.g. `assets/portrait.jpg`), update the `src` attribute of `#portraitImage` in `index.html`, and redeploy.
-
-### 3. Social Profiles
-Verified social destinations are integrated in the header, contact module, and footer:
-- **GitHub:** [https://github.com/Afshaan-shaik](https://github.com/Afshaan-shaik)
-- **Instagram:** [https://www.instagram.com/_thenameisshaan/](https://www.instagram.com/_thenameisshaan/)
+1. **Header & Sticky Navigation:** Wordmark, monogram `AS`, reading progress bar, smooth anchor scrolling, and an accessible 3-line mobile hamburger menu with a full-screen drawer overlay.
+2. **Hero & Image-Led Carousel:** Full-width editorial split layout with 4 action links (`Explore My Work`, `About Me`, `My Creative Journey`, `Get In Touch`) and a 3-slide artistic carousel with slide numbering, previous/next controls, dot pagination, and reduced-motion support.
+3. **Statistics Strip:** Real derived metrics computed dynamically from `portfolioData.ts` (Projects Created, Creative Works, Technologies Explored, Core Disciplines).
+4. **About Me & Image Studio:** Split editorial biography with dropcap styling, poetic quote, "Currently Exploring" chips, and an interactive studio modal for uploading, cropping, zooming, and downloading custom portrait photos.
+5. **Selected Projects Exhibition:** Curated showcase featuring the 4 verified projects (**Khath & Co.**, **The Artisans Quill**, **Scale Link**, **Swiftly**) with working category filters (*All Projects*, *Development*, *Creative Projects*, *Digital Experiences*, *Experiments*) and live demo links.
+6. **Creative Journey (Timeline):** Chronological vertical timeline detailing education, technical foundations, and creative milestones.
+7. **Skills & Technologies:** Organized into 6 categories (Frontend Development, Programming, Frameworks & Libraries, UI/UX & Design, Tools & Platforms, Creative Skills) without arbitrary percentage bars.
+8. **Certifications & Credentials:** Verified coursework and specializations with organization and year metadata.
+9. **Creative Space (Gallery & Lightbox):** Filterable gallery of visual concepts, digital art, illustrations, and poetic reflections with a fullscreen lightbox modal.
+10. **Closing Contact:** Form validation (Name, Email, Subject, Message) with an honest clipboard copy fallback and direct mail client integration.
+11. **Colophon Footer:** Monogram mark, poetic closing line, dynamic year, and back-to-top interaction.
 
 ---
 
-## Deploying to Vercel (Independent New Deployment)
+## Centralized Data Management
 
-This is a brand-new website requiring its own independent Vercel project (do not connect to or overwrite any other existing site):
-
-### Step 1: Push to a New GitHub Repository
-```bash
-git add .
-git commit -m "feat: initial commit of The Digital Atelier portfolio"
-git branch -M main
-git remote add origin https://github.com/Afshaan-shaik/<YOUR-NEW-REPO-NAME>.git
-git push -u origin main
-```
-
-### Step 2: Import into Vercel
-1. Log in to your [Vercel Dashboard](https://vercel.com).
-2. Click **"Add New..."** → **"Project"**.
-3. Select your new GitHub repository.
-4. Framework Preset: **Other** (Static Site).
-5. Root Directory: `./` (leave default).
-6. Build Command: Leave blank (static HTML).
-7. Output Directory: Leave blank.
-8. Click **Deploy**.
-
-Vercel will build and assign your new production URL (e.g., `the-digital-atelier.vercel.app`).
+All content can be edited in [`src/data/portfolioData.ts`](./src/data/portfolioData.ts). No content is scattered across components.
