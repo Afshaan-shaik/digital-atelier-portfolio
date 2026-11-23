@@ -137,7 +137,10 @@ nav.d a:hover,nav.d a.on{color:var(--fg)}nav.d a:hover::after,nav.d a.on::after{
 .at ul{padding-left:1.1rem;color:#35323a;font-size:.95rem;margin-top:.4rem}
 /* work (ref 3) */
 .wh{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;overflow:hidden}
-.wh .big{font:200 clamp(4.6rem,22vw,19rem)/.85 var(--sans);letter-spacing:-.04em;text-transform:uppercase}
+.wh .big{font:200 clamp(4.6rem,22vw,19rem)/.85 var(--sans);letter-spacing:-.04em;text-transform:uppercase;user-select:none}
+#wtitle,#pcnt{cursor:pointer;transition:color .3s,opacity .25s ease,transform .25s ease}
+#wtitle:hover,#pcnt:hover{color:var(--candle)}
+#pcnt.swapping{opacity:0;transform:translateY(-8px)}
 .wc{display:flex;flex-direction:column;align-items:flex-end;gap:1rem}
 .tg{display:flex;gap:1rem}.tg button{background:none;border:0;color:var(--mut);font:400 .78rem var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;min-height:44px}
 .tg button.on{color:var(--fg)}.tg button.on::before{content:"▪ "}
@@ -148,9 +151,12 @@ nav.d a:hover,nav.d a.on{color:var(--fg)}nav.d a:hover::after,nav.d a.on::after{
 .pgrid>:nth-child(3n+2){margin-top:clamp(2rem,8vw,7rem)}.pgrid>:nth-child(3n){margin-top:clamp(1rem,4vw,3.5rem)}
 @media(max-width:899px){.pgrid{grid-template-columns:repeat(2,1fr)}.pgrid>*{margin-top:0!important}.pgrid>:nth-child(even){margin-top:clamp(1.5rem,6vw,3rem)!important}}
 @media(max-width:560px){.pgrid{grid-template-columns:1fr}.pgrid>*{margin-top:0!important}}
-.pi .im{overflow:hidden;background:var(--char)}.pi svg{width:100%;height:100%;display:block;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}.pi:hover svg{transform:scale(1.08)}
+.pi{transition:transform .4s cubic-bezier(.2,.8,.2,1);cursor:pointer}
+.pi:hover{transform:translateY(-4px)}
+.pi .im{overflow:hidden;background:var(--char);cursor:pointer}.pi svg{width:100%;height:100%;display:block;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}.pi:hover svg{transform:scale(1.08)}
 .pi .cp{display:flex;justify-content:space-between;gap:1rem;margin-top:.7rem;font:400 .74rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--silver)}
-.pi:hover .cp b{color:var(--candle)}.pi .cp b{font-weight:400;transition:.3s}
+.pi .cp a{text-decoration:none;color:inherit;transition:color .3s}
+.pi:hover .cp b,.pi .cp a:hover b{color:var(--candle)}.pi .cp b{font-weight:400;transition:.3s}
 .pi p{color:var(--mut);font-size:.88rem;margin:.4rem 0}.pi .mt{font:400 .66rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
 .pi .lk{display:flex;gap:1.2rem;margin-top:.2rem}.pi .lk a,.pi .lk span{font:400 .68rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--candle);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}.pi .lk span{color:var(--grey)}
 .plist .pi{display:grid;grid-template-columns:2.4rem 1fr;gap:.2rem 1rem;padding:1.4rem 0;border-top:1px solid var(--line)}
@@ -244,8 +250,8 @@ footer .cp{margin-top:2rem;color:var(--mut);font:400 .7rem var(--mono);letter-sp
 <div class="at"><div class="eb">About me</div><h2>Curiosity is where every <em>creation</em> begins.</h2>
 <p id="bio1"></p><p id="bio2"></p><h3 id="ab-int">Interests</h3><div class="chips" id="chips"></div><h3>Creative philosophy</h3><p id="phil"></p><h3 id="ab-exp">Currently exploring</h3><ul id="expl"></ul></div></div></div></section>
 
-<section id="projects"><div class="wrap"><div class="wh rv"><div class="big">Work</div><div class="wc"><div class="tg" role="group" aria-label="Layout"><button class="on" data-v="pgrid">Grid</button><button data-v="plist">List</button></div><div class="big" id="pcnt" style="font-weight:200"></div></div></div>
-<div class="mono rv" style="margin-top:1.4rem;max-width:36rem">Selected work — a collection of ideas transformed into digital experiences.</div>
+<section id="projects"><div class="wrap"><div class="wh rv" title="Click to cycle categories"><div class="big" id="wtitle" role="button" tabindex="0" aria-label="Work section, click to cycle categories">Work</div><div class="wc"><div class="tg" role="group" aria-label="Layout"><button class="on" data-v="pgrid">Grid</button><button data-v="plist">List</button></div><div class="big" id="pcnt" role="button" tabindex="0" aria-label="Project count, click to cycle categories" style="font-weight:200"></div></div></div>
+<div class="mono rv" id="psub" style="margin-top:1.4rem;max-width:36rem">Selected work — a collection of ideas transformed into digital experiences.</div>
 <div class="fl" id="fl" role="group" aria-label="Filter projects"></div><div id="pg" class="pgrid" aria-live="polite"></div></div></section>
 
 <section id="journey"><div class="wrap rv"><div class="mono">(04) — Journey</div><h2 style="margin-top:.8rem">My <em>journey</em></h2><div class="jr" id="jr"></div></div></section>
@@ -288,11 +294,13 @@ var CONFIG={
  interests:["Web development","Technology","UI/UX design","Creative experimentation","Digital art","Building meaningful digital products"],
  exploring:["Add what you’re learning right now","Add a project you’re curious about"],
  slides:[["Projects","Websites and apps built from imagination."],["Speeches","Words shaped for the stage."],["Poems & art","Verses and visuals written after dark."]],
- projects:[
-  {t:"Khath & Co.",d:"A cinematic letter-writing website with a handcrafted opening.",c:"Digital Experiences",tech:["Web","Motion"],live:"https://khath-and-co.vercel.app",git:""},
-  {t:"The Artisan’s Quill",d:"A showcase of art, poetry and music.",c:"Creative Projects",tech:["Web","Design"],live:"https://the-artisans-quill.vercel.app",git:""},
-  {t:"CineStock",d:"An analog film and VHS filter lab with 24 stocks, dials and a reel export.",c:"Creative Projects",tech:["Web","Video"],live:"",git:""},
-  {t:"ScaleLink",d:"A URL shortener designed to work on both PC and mobile.",c:"Development",tech:["Web","Backend"],live:"",git:""}],
+   projects:[
+   {t:"Khath & Co.",d:"A bespoke digital letter-writing space with handcrafted envelope unfolding, digital wax seals, and tactile vintage stationery.",c:"Digital Experiences",tech:["React","Motion","Web Typography","Editorial UI"],live:"https://khath-and-co.vercel.app",git:"https://github.com/Afshaan-shaik/khat-and-co"},
+   {t:"The Artisan’s Quill",d:"A curated digital sanctuary and exhibition celebrating visual arts, poetry, and illustration with ambient lighting and vaulted aesthetics.",c:"Creative Projects",tech:["Next.js","Canvas API","Framer Motion","Dark Aesthetic"],live:"https://the-artisans-quill.vercel.app",git:"https://github.com/Afshaan-shaik/Artisan-s-Quill-"},
+   {t:"CineStock",d:"An analog cinema and VHS film lab featuring 24 authentic vintage stocks, grain dials, and color-grading reel simulation.",c:"Creative Projects",tech:["WebGL","Video","CSS Shaders","Analog UI"],live:"https://cinnestock.vercel.app",git:"https://github.com/Afshaan-shaik/CineStock"},
+   {t:"ScaleLink",d:"A production-grade distributed URL engine and real-time analytics pipeline designed for rapid keyboard-first workflows across desktop and mobile.",c:"Development",tech:["TypeScript","Vite","REST APIs","Monospace UI"],live:"https://scale-link-six.vercel.app",git:"https://github.com/Afshaan-shaik/scale-link"},
+   {t:"Swiftly",d:"A premium same-day and hyperlocal express delivery platform exploring real-time kinetic maps, cartographic routing, and spatial clarity.",c:"Experiments",tech:["JavaScript","Leaflet / Mapbox","GeoJSON","Spatial UI"],live:"https://swiftly-afshu.vercel.app",git:"https://github.com/Afshaan-shaik/swiftly"}],
+
  journey:[{date:"Present",title:"Master of Computer Applications",d:"Add your university and years.",cat:"Education"}],
  skills:{"Frontend development":["HTML","CSS","JavaScript"],"Programming languages":["Add your languages"],"Frameworks & libraries":["Add your frameworks"],"Design & UI/UX":["UI / UX design","Illustration"],"Tools & platforms":["Add your tools"],"Creative skills":["Poetry","Public speaking","Film editing"]},
  certs:[],
@@ -337,6 +345,27 @@ $("enter").onclick=enter;$("skip").onclick=enter;
 var AP=[["#171a33","#E5BD84"],["#0f1a2e","#C5A574"],["#241626","#DED1B9"],["#101a24","#E5BD84"],["#2a1a14","#ffb870"],["#14141f","#C5A574"],["#1a1226","#AAA8AB"],["#10141c","#E5BD84"]];
 function art(i,w,h){var p=AP[i%8],o="",k;for(k=0;k<24;k++)o+='<circle cx="'+((k*53+i*31)%w)+'" cy="'+((k*37+i*17)%(h*.6))+'" r="'+(.6+(k%3)*.5)+'" fill="#F2EADD" opacity="'+(.35+(k%4)*.15)+'"/>';
  return'<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Decorative artwork"><defs><radialGradient id="a'+i+w+'" cx=".5" cy=".4"><stop offset="0" stop-color="'+p[1]+'" stop-opacity=".85"/><stop offset=".5" stop-color="'+p[1]+'" stop-opacity=".1"/><stop offset="1" stop-color="'+p[0]+'" stop-opacity="0"/></radialGradient></defs><rect width="'+w+'" height="'+h+'" fill="'+p[0]+'"/><circle cx="'+w*(.3+(i%3)*.2)+'" cy="'+h*.4+'" r="'+w*.55+'" fill="url(#a'+i+w+')"/>'+o+'<path d="M0 '+h+'V'+h*.74+'Q'+w*.25+' '+(h*.55+i*5)+' '+w*.5+' '+h*.77+'T'+w+' '+h*.7+'V'+h+'Z" fill="#090A0F" opacity=".85"/></svg>'}
+
+function projectVisual(p,i,w,h){
+ if(p.t==="Khath & Co."){
+  return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Khath &amp; Co."><defs><radialGradient id="kg'+i+'" cx="50%" cy="40%"><stop offset="0%" stop-color="#2a1e30"/><stop offset="100%" stop-color="#0a0a12"/></radialGradient></defs><rect width="'+w+'" height="'+h+'" fill="url(#kg'+i+')"/><rect x="'+(w*.18)+'" y="'+(h*.24)+'" width="'+(w*.64)+'" height="'+(h*.5)+'" rx="4" fill="#1b1724" stroke="#C5A574" stroke-width="1.5" opacity=".9"/><path d="M'+(w*.18)+' '+(h*.24)+' L'+(w*.5)+' '+(h*.52)+' L'+(w*.82)+' '+(h*.24)+'" fill="none" stroke="#E5BD84" stroke-width="1.5" opacity=".8"/><path d="M'+(w*.18)+' '+(h*.74)+' L'+(w*.42)+' '+(h*.5)+' M'+(w*.82)+' '+(h*.74)+' L'+(w*.58)+' '+(h*.5)+'" stroke="#8a6a3c" stroke-width="1" opacity=".6"/><circle cx="'+(w*.5)+'" cy="'+(h*.52)+'" r="'+(w*.075)+'" fill="#C5A574"/><circle cx="'+(w*.5)+'" cy="'+(h*.52)+'" r="'+(w*.06)+'" fill="#8a6a2c" stroke="#f4d8a0" stroke-width="1"/><text x="'+(w*.5)+'" y="'+(h*.52+4)+'" fill="#F2EADD" font-size="11" font-family="Caveat,cursive" text-anchor="middle" font-weight="bold">K</text><line x1="'+(w*.26)+'" y1="'+(h*.34)+'" x2="'+(w*.4)+'" y2="'+(h*.34)+'" stroke="#AAA8AB" stroke-width="1" stroke-dasharray="3,3" opacity=".5"/><line x1="'+(w*.6)+'" y1="'+(h*.34)+'" x2="'+(w*.74)+'" y2="'+(h*.34)+'" stroke="#AAA8AB" stroke-width="1" stroke-dasharray="3,3" opacity=".5"/><text x="'+(w*.5)+'" y="'+(h*.87)+'" fill="#C5A574" font-family="var(--mono)" font-size="9" letter-spacing="3" text-anchor="middle" opacity=".8">KHATH &amp; CO. · खत</text></svg>';
+ }
+ if(p.t==="The Artisan’s Quill"){
+  return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The Artisan’s Quill"><defs><radialGradient id="qg'+i+'" cx="50%" cy="30%"><stop offset="0%" stop-color="#241b38"/><stop offset="100%" stop-color="#0a0b12"/></radialGradient></defs><rect width="'+w+'" height="'+h+'" fill="url(#qg'+i+')"/><path d="M'+(w*.25)+' '+(h*.8)+' V'+(h*.35)+' A'+(w*.25)+' '+(w*.25)+' 0 0 1 '+(w*.75)+' '+(h*.35)+' V'+(h*.8)+'" fill="none" stroke="#C5A574" stroke-width="1.2" opacity=".5"/><path d="M'+(w*.68)+' '+(h*.18)+' Q'+(w*.5)+' '+(h*.45)+' '+(w*.36)+' '+(h*.72)+'" fill="none" stroke="#E5BD84" stroke-width="2.5"/><path d="M'+(w*.68)+' '+(h*.18)+' Q'+(w*.78)+' '+(h*.35)+' '+(w*.52)+' '+(h*.55)+' Q'+(w*.42)+' '+(h*.65)+' '+(w*.36)+' '+(h*.72)+' Q'+(w*.45)+' '+(h*.52)+' '+(w*.58)+' '+(h*.38)+' Z" fill="#C5A574" opacity=".4"/><circle cx="'+(w*.36)+'" cy="'+(h*.72)+'" r="4" fill="#E5BD84"/><ellipse cx="'+(w*.36)+'" cy="'+(h*.75)+'" rx="'+(w*.1)+'" ry="4" fill="none" stroke="#C5A574" stroke-width="1" opacity=".7"/><ellipse cx="'+(w*.36)+'" cy="'+(h*.75)+'" rx="'+(w*.18)+'" ry="7" fill="none" stroke="#C5A574" stroke-width="0.7" opacity=".4"/><circle cx="'+(w*.5)+'" cy="'+(h*.25)+'" r="2" fill="#F2EADD" opacity=".9"/><circle cx="'+(w*.38)+'" cy="'+(h*.32)+'" r="1.5" fill="#E5BD84" opacity=".8"/><circle cx="'+(w*.62)+'" cy="'+(h*.34)+'" r="1.5" fill="#E5BD84" opacity=".8"/><text x="'+(w*.5)+'" y="'+(h*.87)+'" fill="#C5A574" font-family="var(--mono)" font-size="9" letter-spacing="3" text-anchor="middle" opacity=".8">THE ARTISAN’S QUILL</text></svg>';
+ }
+ if(p.t==="CineStock"){
+  var sp="";for(var s=0;s<6;s++)sp+='<rect x="'+(w*.18+s*(w*.11))+'" y="'+(h*.13)+'" width="'+(w*.06)+'" height="'+(h*.05)+'" rx="2"/><rect x="'+(w*.18+s*(w*.11))+'" y="'+(h*.78)+'" width="'+(w*.06)+'" height="'+(h*.05)+'" rx="2"/>';
+  return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid slice" role="img" aria-label="CineStock"><defs><linearGradient id="cg'+i+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1c1612"/><stop offset="50%" stop-color="#2a1810"/><stop offset="100%" stop-color="#0a0a0f"/></linearGradient><radialGradient id="cf'+i+'" cx="50%" cy="50%"><stop offset="0%" stop-color="#ffb870" stop-opacity=".7"/><stop offset="100%" stop-color="#ffb870" stop-opacity="0"/></radialGradient></defs><rect width="'+w+'" height="'+h+'" fill="url(#cg'+i+')"/><rect x="'+(w*.15)+'" y="'+(h*.22)+'" width="'+(w*.7)+'" height="'+(h*.52)+'" rx="4" fill="#0d0e14" stroke="#C5A574" stroke-width="1.5"/><g fill="#242634">'+sp+'</g><circle cx="'+(w*.5)+'" cy="'+(h*.48)+'" r="'+(w*.22)+'" fill="url(#cf'+i+')"/><circle cx="'+(w*.5)+'" cy="'+(h*.48)+'" r="'+(w*.15)+'" fill="none" stroke="#E5BD84" stroke-width="1.2" opacity=".8"/><circle cx="'+(w*.5)+'" cy="'+(h*.48)+'" r="'+(w*.08)+'" fill="none" stroke="#E5BD84" stroke-width="1" stroke-dasharray="2,2"/><line x1="'+(w*.3)+'" y1="'+(h*.48)+'" x2="'+(w*.7)+'" y2="'+(h*.48)+'" stroke="#C5A574" stroke-width="0.8" opacity=".6"/><line x1="'+(w*.5)+'" y1="'+(h*.3)+'" x2="'+(w*.5)+'" y2="'+(h*.66)+'" stroke="#C5A574" stroke-width="0.8" opacity=".6"/><text x="'+(w*.2)+'" y="'+(h*.3)+'" fill="#E5BD84" font-family="var(--mono)" font-size="8" opacity=".9">ISO 400</text><text x="'+(w*.8)+'" y="'+(h*.3)+'" fill="#E5BD84" font-family="var(--mono)" font-size="8" text-anchor="end" opacity=".9">35MM</text><text x="'+(w*.5)+'" y="'+(h*.89)+'" fill="#C5A574" font-family="var(--mono)" font-size="9" letter-spacing="3" text-anchor="middle" opacity=".8">CINESTOCK · 24 STOCKS</text></svg>';
+ }
+ if(p.t==="ScaleLink"){
+  var gr="";for(var g=1;g<=5;g++)gr+='<line x1="0" y1="'+(h*g/6)+'" x2="'+w+'" y2="'+(h*g/6)+'"/><line x1="'+(w*g/6)+'" y1="0" x2="'+(w*g/6)+'" y2="'+h+'"/>';
+  return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid slice" role="img" aria-label="ScaleLink"><defs><radialGradient id="slg'+i+'" cx="50%" cy="40%"><stop offset="0%" stop-color="#10202e"/><stop offset="100%" stop-color="#080c14"/></radialGradient></defs><rect width="'+w+'" height="'+h+'" fill="url(#slg'+i+')"/><g stroke="#C5A574" stroke-width="0.5" opacity=".2">'+gr+'</g><rect x="'+(w*.14)+'" y="'+(h*.2)+'" width="'+(w*.72)+'" height="'+(h*.56)+'" rx="5" fill="#0d141e" stroke="#C5A574" stroke-width="1.5"/><line x1="'+(w*.14)+'" y1="'+(h*.3)+'" x2="'+(w*.86)+'" y2="'+(h*.3)+'" stroke="#C5A574" stroke-width="0.8" opacity=".6"/><circle cx="'+(w*.2)+'" cy="'+(h*.25)+'" r="3" fill="#E5BD84"/><circle cx="'+(w*.25)+'" cy="'+(h*.25)+'" r="3" fill="#AAA8AB" opacity=".7"/><circle cx="'+(w*.3)+'" cy="'+(h*.25)+'" r="3" fill="#8E8A91" opacity=".5"/><path d="M'+(w*.2)+' '+(h*.55)+' L'+(w*.35)+' '+(h*.5)+' L'+(w*.45)+' '+(h*.62)+' L'+(w*.6)+' '+(h*.38)+' L'+(w*.7)+' '+(h*.45)+' L'+(w*.8)+' '+(h*.34)+'" fill="none" stroke="#E5BD84" stroke-width="2"/><circle cx="'+(w*.6)+'" cy="'+(h*.38)+'" r="4" fill="#E5BD84"/><rect x="'+(w*.2)+'" y="'+(h*.66)+'" width="'+(w*.6)+'" height="'+(h*.07)+'" rx="2" fill="#172230"/><text x="'+(w*.5)+'" y="'+(h*.71)+'" fill="#F2EADD" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle">12,410 QPS · 1.2ms p50</text><text x="'+(w*.5)+'" y="'+(h*.87)+'" fill="#C5A574" font-family="var(--mono)" font-size="9" letter-spacing="3" text-anchor="middle" opacity=".8">SCALELINK · DISTRIBUTED</text></svg>';
+ }
+ if(p.t==="Swiftly"){
+  return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Swiftly"><defs><radialGradient id="swg'+i+'" cx="50%" cy="45%"><stop offset="0%" stop-color="#142622"/><stop offset="100%" stop-color="#080e0c"/></radialGradient></defs><rect width="'+w+'" height="'+h+'" fill="url(#swg'+i+')"/><ellipse cx="'+(w*.5)+'" cy="'+(h*.48)+'" rx="'+(w*.36)+'" ry="'+(h*.28)+'" fill="none" stroke="#C5A574" stroke-width="0.8" stroke-dasharray="3,3" opacity=".35"/><ellipse cx="'+(w*.5)+'" cy="'+(h*.48)+'" rx="'+(w*.25)+'" ry="'+(h*.19)+'" fill="none" stroke="#C5A574" stroke-width="0.8" opacity=".5"/><ellipse cx="'+(w*.5)+'" cy="'+(h*.48)+'" rx="'+(w*.14)+'" ry="'+(h*.1)+'" fill="none" stroke="#E5BD84" stroke-width="1" opacity=".7"/><path d="M'+(w*.2)+' '+(h*.65)+' C'+(w*.35)+' '+(h*.7)+','+(w*.35)+' '+(h*.45)+','+(w*.5)+' '+(h*.48)+' S'+(w*.7)+' '+(h*.3)+','+(w*.8)+' '+(h*.32)+'" fill="none" stroke="#E5BD84" stroke-width="2.5" stroke-dasharray="5,2"/><circle cx="'+(w*.2)+'" cy="'+(h*.65)+'" r="4" fill="#AAA8AB"/><circle cx="'+(w*.5)+'" cy="'+(h*.48)+'" r="5" fill="#C5A574"/><circle cx="'+(w*.8)+'" cy="'+(h*.32)+'" r="7" fill="#E5BD84"/><circle cx="'+(w*.8)+'" cy="'+(h*.32)+'" r="3" fill="#090A0F"/><line x1="'+(w*.5)+'" y1="'+(h*.48)+'" x2="'+(w*.72)+'" y2="'+(h*.3)+'" stroke="#E5BD84" stroke-width="1.2" opacity=".7"/><text x="'+(w*.5)+'" y="'+(h*.87)+'" fill="#C5A574" font-family="var(--mono)" font-size="9" letter-spacing="3" text-anchor="middle" opacity=".8">SWIFTLY · HYPERLOCAL EXPRESS</text></svg>';
+ }
+ return art(i,w,h);
+}
 function scene(k){var W=1000,H=520,b='<svg viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Decorative scene"><defs><radialGradient id="sg'+k+'" cx=".5" cy=".4"><stop offset="0" stop-color="#E5BD84" stop-opacity=".8"/><stop offset="1" stop-color="#E5BD84" stop-opacity="0"/></radialGradient><linearGradient id="sp'+k+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2EADD" stop-opacity=".5"/><stop offset="1" stop-color="#F2EADD" stop-opacity="0"/></linearGradient></defs><rect width="1000" height="520" fill="#0b0d16"/>',i,o="";
  for(i=0;i<40;i++)o+='<circle cx="'+((i*131+k*77)%1000)+'" cy="'+((i*47+k*29)%300)+'" r="'+(.7+(i%3)*.5)+'" fill="#F2EADD" opacity="'+(.3+(i%4)*.15)+'"/>';b+=o;
  if(k===0){b+='<circle cx="760" cy="150" r="260" fill="url(#sg0)"/><rect x="200" y="110" width="520" height="300" rx="6" fill="#0d0f18" stroke="#C5A574" stroke-width="2"/><path d="M200 150H720" stroke="#C5A574" opacity=".6"/><circle cx="224" cy="130" r="5" fill="#C5A574"/><circle cx="244" cy="130" r="5" fill="#AAA8AB"/><circle cx="264" cy="130" r="5" fill="#8E8A91"/>';for(i=0;i<9;i++)b+='<rect x="'+(240+(i%3)*30)+'" y="'+(185+i*22)+'" width="'+(120+((i*53)%240))+'" height="7" rx="3" fill="'+(i%3?"#AAA8AB":"#E5BD84")+'" opacity=".55"/>'}
@@ -370,12 +399,83 @@ function mv(){var im=$("pi").querySelector("img");if(im)im.style.objectPosition=
 $("px").oninput=mv;$("py").oninput=mv;
 /* projects */
 var cats=["All Projects","Development","Creative Projects","Digital Experiences","Experiments"],pc="All Projects",view="pgrid",RT=["4/5","1/1","5/4","3/4"];
-$("pcnt").textContent=String(C.projects.length).padStart(2,"0");
+
+function setCategory(categoryName){
+ pc=categoryName;
+ [].forEach.call($("fl").children,function(b){
+  var on=b.textContent===pc;
+  b.classList.toggle("on",on);
+  b.setAttribute("aria-pressed",on);
+ });
+ rp();
+}
+
+function nextCategory(){
+ var curIdx=cats.indexOf(pc);
+ var nextIdx=(curIdx+1)%cats.length;
+ setCategory(cats[nextIdx]);
+}
+
 $("fl").innerHTML=cats.map(function(c,i){return'<button class="'+(i?'':'on')+'" aria-pressed="'+!i+'">'+c+'</button>'}).join("");
-$("fl").onclick=function(e){if(e.target.tagName!=="BUTTON")return;pc=e.target.textContent;[].forEach.call($("fl").children,function(b){var on=b===e.target;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)});rp()};
-document.querySelector(".tg").onclick=function(e){var b=e.target.closest("button");if(!b)return;view=b.dataset.v;[].forEach.call(b.parentNode.children,function(x){x.classList.toggle("on",x===b)});rp()};
-function rp(){var L=C.projects.map(function(p,i){return[p,i]}).filter(function(x){return pc==="All Projects"||x[0].c===pc});$("pg").className=view;
- $("pg").innerHTML=L.length?L.map(function(x,k){var p=x[0],n=String(x[1]+1).padStart(2,"0");return'<article class="pi"><div class="im" style="aspect-ratio:'+RT[x[1]%4]+'">'+art(x[1],400,500)+'</div><div class="cp"><b>'+p.t+'</b><span>'+n+'</span></div><div class="mt">'+p.c+' · '+p.tech.join(" / ")+'</div><p>'+p.d+'</p><div class="lk">'+(p.live?'<a href="'+p.live+'" target="_blank" rel="noopener">View project ↗</a>':'<span>Link coming soon</span>')+(p.git?'<a href="'+p.git+'" target="_blank" rel="noopener">GitHub ↗</a>':'')+'</div></article>'}).join(""):'<div class="empty">Nothing on this shelf yet — the next idea is still being written.</div>'}
+
+$("fl").onclick=function(e){
+ if(e.target.tagName!=="BUTTON")return;
+ setCategory(e.target.textContent);
+};
+
+if($("wtitle")) $("wtitle").onclick=nextCategory;
+if($("pcnt")) $("pcnt").onclick=nextCategory;
+
+document.querySelector(".tg").onclick=function(e){
+ var b=e.target.closest("button");
+ if(!b)return;
+ view=b.dataset.v;
+ [].forEach.call(b.parentNode.children,function(x){x.classList.toggle("on",x===b)});
+ rp();
+};
+
+function rp(){
+ var L=C.projects.map(function(p,i){return[p,i]}).filter(function(x){return pc==="All Projects"||x[0].c===pc});
+ $("pg").className=view;
+ 
+ var newCount=String(L.length).padStart(2,"0");
+ if($("pcnt")){
+  if(!RM){
+   $("pcnt").classList.add("swapping");
+   setTimeout(function(){
+    $("pcnt").textContent=newCount;
+    $("pcnt").classList.remove("swapping");
+   },110);
+  } else {
+   $("pcnt").textContent=newCount;
+  }
+ }
+ 
+ if($("psub")){
+  var subMap={
+   "All Projects":"Selected work — a curated archive of "+C.projects.length+" live digital platforms, utilities & creative experiments.",
+   "Development":"Development — production systems, distributed URL engine & rapid keyboard-first tools ("+newCount+" project).",
+   "Creative Projects":"Creative Projects — digital art exhibitions, analog film filter labs & sensory spaces ("+newCount+" projects).",
+   "Digital Experiences":"Digital Experiences — bespoke editorial websites, digital stationery & atmospheric storytelling ("+newCount+" project).",
+   "Experiments":"Experiments — hyperlocal delivery platforms, kinetic mapping & spatial interactions ("+newCount+" project)."
+  };
+  $("psub").textContent=subMap[pc]||("Viewing "+pc+" ("+newCount+" projects)");
+ }
+
+ $("pg").innerHTML=L.length?L.map(function(x,k){
+  var p=x[0],n=String(x[1]+1).padStart(2,"0");
+  return '<article class="pi" onclick="if(!event.target.closest(\'a\'))window.open(\''+p.live+'\',\'_blank\',\'noopener\')">'+
+   '<div class="im" style="aspect-ratio:'+RT[x[1]%4]+'">'+projectVisual(p,x[1],400,500)+'</div>'+
+   '<div class="cp"><b><a href="'+p.live+'" target="_blank" rel="noopener">'+p.t+'</a></b><span>'+n+'</span></div>'+
+   '<div class="mt">'+p.c+' · '+p.tech.join(" / ")+'</div>'+
+   '<p>'+p.d+'</p>'+
+   '<div class="lk">'+
+    (p.live?'<a href="'+p.live+'" target="_blank" rel="noopener">View project ↗</a>':'<span>Link coming soon</span>')+
+    (p.git?'<a href="'+p.git+'" target="_blank" rel="noopener">GitHub ↗</a>':'')+
+   '</div>'+
+  '</article>';
+ }).join(""):'<div class="empty">Nothing on this shelf yet — the next idea is still being written.</div>';
+}
 rp();
 /* journey / skills / creds */
 $("jr").innerHTML=C.journey.map(function(j){return'<div class="it"><span class="mono">'+j.date+' · '+j.cat+'</span><div><h3>'+j.title+'</h3><p>'+j.d+'</p></div></div>'}).join("")+'<div class="it"><span class="mono">Next</span><p>More chapters — internships, milestones and achievements — appear here as they’re added.</p></div>';
