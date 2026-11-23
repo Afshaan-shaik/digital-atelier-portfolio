@@ -206,7 +206,14 @@ nav.d a:hover,nav.d a.on{color:var(--fg)}nav.d a:hover::after,nav.d a.on::after{
 .fld .err{color:#9b1c1c;font-size:.82rem;min-height:1.2em}.fld [aria-invalid="true"]{border-color:#9b1c1c}
 #st{margin-top:.8rem;min-height:1.6em;font-size:.92rem}
 .letter .btn{color:#2a2118;border-color:#2a2118}.letter .btn:hover,.letter .btn.fill{background:#2a2118;color:#F2EADD}
-.soc{display:flex;gap:1.4rem;flex-wrap:wrap;margin-top:2rem}
+.soc-wrap{margin-top:clamp(2.5rem,6vw,4rem);padding-top:2.2rem;border-top:1px solid rgba(255,255,255,.12);text-align:center;width:100%}
+.soc-wrap .mono{color:var(--candle);font:400 .72rem var(--mono);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.3rem;display:block}
+.soc{display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center;align-items:center;margin:0 auto}
+.soc-btn{display:inline-flex;align-items:center;justify-content:center;gap:.7rem;min-height:50px;padding:.7rem 1.5rem;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid rgba(197,165,116,.3);color:var(--ivory);text-decoration:none;font:400 .74rem var(--mono);letter-spacing:.12em;text-transform:uppercase;transition:all .35s cubic-bezier(.2,.8,.2,1);cursor:pointer}
+.soc-btn svg{width:19px;height:19px;display:block;flex-shrink:0;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.soc-btn:hover{background:var(--candle);border-color:var(--candle);color:var(--mid);transform:translateY(-3px);box-shadow:0 10px 24px rgba(229,189,132,.25)}
+.soc-btn:hover svg{transform:scale(1.15)}
+.soc-btn:active{transform:translateY(-1px)}
 /* footer */
 footer{position:relative;z-index:2;margin-top:clamp(4rem,9vw,7rem);padding:clamp(5rem,12vw,9rem) 1rem 3rem;text-align:center;background:linear-gradient(transparent,rgba(229,189,132,.07))}
 footer .fq{font:italic 300 clamp(1.5rem,4.6vw,3rem)/1.25 var(--serif);max-width:20em;margin:0 auto}
@@ -271,7 +278,7 @@ footer .cp{margin-top:2rem;color:var(--mut);font:400 .7rem var(--mono);letter-sp
 <div class="fld"><label for="cf-s">Subject</label><input id="cf-s"><div class="err" id="es"></div></div>
 <div class="fld"><label for="cf-m">Message</label><textarea id="cf-m"></textarea><div class="err" id="emm"></div></div>
 <div class="acts"><button class="btn fill" id="sb" type="submit">Send message</button></div><div id="st" role="status"></div></form>
-<div class="soc" id="soc"></div></div>
+<div class="soc-wrap"><span class="mono">Connect &amp; Social Channels</span><div class="soc" id="soc" role="navigation" aria-label="Social and contact links"></div></div></div>
 
 </main>
 <footer><div class="fq" id="fq"></div><div class="sig">Afshaan Shaikh</div><div class="stars" aria-hidden="true">✦ ✧ ✦</div><nav id="fn" aria-label="Footer"></nav><div class="cp">© <span id="yr"></span> AFSHAAN SHAIKH — A LITTLE WORLD BETWEEN IMAGINATION, TECHNOLOGY AND ART</div></footer>
@@ -287,7 +294,7 @@ var CONFIG={
  intro:"I’m a creative thinker and aspiring developer exploring the intersection of technology, design and artistic expression.",
  quotes:["Between the stars and the stories, I create my own universe.","Not everything beautiful needs to be explained. Some things are meant to be created.","Every interface begins with imagination."],
  closing:"Between the stars and the stories, I create my own universe.",
- email:"",endpoint:"",
+ email:"afshaan100@gmail.com",endpoint:"",
  socials:{github:"https://github.com/Afshaan-shaik",instagram:"https://www.instagram.com/_thenameisshaan/",linkedin:""},
  bio:["I’m Afshaan — an MCA student, an artist and a builder of web projects. I write poems, deliver speeches, edit films and paint, and I love turning those instincts into digital experiences.","Replace this paragraph with your own biography — where you started, what you make and what you want to build next."],
  philosophy:"Start with a feeling, then find the technology that carries it.",
@@ -502,9 +509,35 @@ rg();
 if(C.testimonials.length){$("testi").hidden=false;$("tt").innerHTML=C.testimonials.map(function(t){return'<blockquote class="serif" style="font-size:1.8rem;margin-top:1.4rem">“'+t.text+'”<footer style="padding:0;margin:.6rem 0 0;background:none;text-align:left;font:400 .72rem var(--mono)">'+t.name+' — '+t.role+(t.org?', '+t.org:'')+'</footer></blockquote>'}).join("")}
 /* contact */
 if(C.email){$("em").hidden=false;$("em").textContent=C.email;$("em").href="mailto:"+C.email}
-var SO=[["github","GitHub"],["instagram","Instagram"],["linkedin","LinkedIn"]].filter(function(s){return C.socials[s[0]]}).map(function(s){return'<a class="tl-link" href="'+C.socials[s[0]]+'" target="_blank" rel="noopener">'+s[1]+'</a>'});
-if(C.email)SO.push('<a class="tl-link" href="mailto:'+C.email+'">Email</a>');
-$("soc").innerHTML=SO.length?SO.join(""):'<span class="mono">Social links appear here once configured</span>';
+var mailSvg='<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';
+var instaSvg='<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>';
+var gitSvg='<svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>';
+var contactSvg='<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="13" y2="13"/></svg>';
+
+var socItems=[
+ {label:"Mail",href:"mailto:"+(C.email||"afshaan100@gmail.com"),svg:mailSvg,external:false,title:"Send an email to "+(C.email||"afshaan100@gmail.com")},
+ {label:"Instagram",href:C.socials.instagram||"https://www.instagram.com/_thenameisshaan/",svg:instaSvg,external:true,title:"Follow Afshaan on Instagram"},
+ {label:"GitHub",href:C.socials.github||"https://github.com/Afshaan-shaik",svg:gitSvg,external:true,title:"View Afshaan's GitHub profile"},
+ {label:"Contact",href:"#cf-n",svg:contactSvg,external:false,title:"Write a direct note in the letter form"}
+];
+if(C.socials.linkedin){
+ var inSvg='<svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>';
+ socItems.push({label:"LinkedIn",href:C.socials.linkedin,svg:inSvg,external:true,title:"Connect on LinkedIn"});
+}
+$("soc").innerHTML=socItems.map(function(s){
+ return '<a class="soc-btn" href="'+s.href+'" '+(s.external?'target="_blank" rel="noopener" ':'')+'title="'+s.title+'" aria-label="'+s.label+'">'+s.svg+'<span>'+s.label+'</span></a>';
+}).join("");
+var cBtn=$("soc").querySelector('a[href="#cf-n"]');
+if(cBtn){
+ cBtn.onclick=function(e){
+  e.preventDefault();
+  var inp=$("cf-n");
+  if(inp){
+   inp.scrollIntoView({behavior:RM?"auto":"smooth",block:"center"});
+   setTimeout(function(){inp.focus()},RM?0:350);
+  }
+ };
+}
 var busy=false;function bad(id,eid,m){$(eid).textContent=m;$(id).setAttribute("aria-invalid",!!m);return !m}
 $("cf").onsubmit=function(ev){ev.preventDefault();if(busy)return;var n=$("cf-n").value.trim(),e=$("cf-e").value.trim(),s=$("cf-s").value.trim(),m=$("cf-m").value.trim(),ok=true;
  ok=bad("cf-n","en",n?"":"Please tell me your name.")&&ok;
