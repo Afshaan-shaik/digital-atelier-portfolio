@@ -79,11 +79,6 @@ nav.d a:hover,nav.d a.on{color:var(--fg)}nav.d a:hover::after,nav.d a.on::after{
 #skip{background:none;border:0;color:#AAA8AB;font:400 .7rem var(--mono);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;min-height:48px;padding:0 1rem}
 /* hero (ref 1) */
 .hero{position:relative;padding:clamp(5.5rem,10vw,7.5rem) 0 clamp(2rem,5vw,4rem);overflow:hidden;z-index:2}
-.m1,.m2{position:absolute;background:linear-gradient(135deg,#171822,#0c0d13);border-top:1px solid rgba(170,168,171,.35);display:none}
-.m1{left:3%;top:4rem;width:12%;height:78%}.m2{right:0;bottom:2rem;width:12%;height:34%}
-@media(min-width:1100px){.m1,.m2{display:block}}
-.dot{position:absolute;left:4%;bottom:1.2rem;width:9px;height:9px;background:var(--candle);display:none}.tr{position:absolute;right:5%;top:5rem;width:80px;height:1px;background:var(--silver);opacity:.6;display:none}
-@media(min-width:1100px){.dot,.tr{display:block}}
 .hf{position:relative;max-width:1120px;margin:0 auto;width:calc(100% - 2*clamp(1rem,4vw,2.5rem));background:var(--soft);border:1px solid rgba(170,168,171,.4);padding:clamp(1.2rem,4.5vw,3.6rem);color:var(--ivory)}
 .hd{display:grid;gap:1.6rem}
 @media(min-width:900px){.hd{grid-template-columns:1.35fr 1fr;align-items:end}}
@@ -232,7 +227,7 @@ footer .cp{margin-top:2rem;color:var(--mut);font:400 .7rem var(--mono);letter-sp
 <div id="menu" aria-hidden="true"></div>
 
 <main>
-<div class="hero" id="home"><div class="m1"></div><div class="m2"></div><div class="dot"></div><div class="tr"></div>
+<div class="hero" id="home">
 <div class="hf"><div class="hd"><div><div class="mono">Personal Portfolio / Creative Technologist</div><h1>Afshaan Shaikh</h1><p class="hl" id="hl"></p></div>
 <div><p class="in" id="hi"></p><div class="acts"><a class="btn" href="#projects" data-s>Explore my work</a><a class="tl-link" href="#about" data-s>About me</a><a class="tl-link" href="#journey" data-s>My creative journey</a><a class="tl-link" href="#contact" data-s>Get in touch</a></div></div></div>
 <div class="sl" id="sl" role="region" aria-roledescription="carousel" aria-label="Featured" tabindex="0"><div id="ss"></div><div class="dots" id="dots"></div>
