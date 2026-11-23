@@ -27,7 +27,7 @@ export const portfolioData: PortfolioData = {
   socials: {
     github: 'https://github.com/Afshaan-shaik',
     instagram: 'https://www.instagram.com/_thenameisshaan/',
-    linkedin: '', // Configurable: add your LinkedIn profile URL when ready
+    linkedin: 'https://www.linkedin.com/in/afshaanshaikh',
     email: ''     // Configurable: add your contact inbox when ready
   },
 
