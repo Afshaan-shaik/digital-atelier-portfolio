@@ -159,7 +159,11 @@ body[data-d="1"] .hint{color:#16352a}
 @media(max-width:560px){.pgrid{grid-template-columns:1fr}.pgrid>*{margin-top:0!important}}
 .pi{transition:transform .4s cubic-bezier(.2,.8,.2,1);cursor:pointer}
 .pi:hover{transform:translateY(-4px)}
-.pi .im{overflow:hidden;background:var(--char);cursor:pointer}.pi svg{width:100%;height:100%;display:block;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}.pi:hover svg{transform:scale(1.08)}
+.pi .im{position:relative;overflow:hidden;background:var(--char);cursor:pointer;border-radius:6px;border:1px solid var(--line)}
+.pi .im img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.pi:hover .im img{transform:scale(1.05)}
+.live-badge{position:absolute;top:10px;right:10px;display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;background:rgba(9,10,15,.78);backdrop-filter:blur(8px);border:1px solid rgba(197,165,116,.4);font:400 .62rem var(--mono);letter-spacing:.14em;color:#F2EADD;pointer-events:none;z-index:2}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#48c774;box-shadow:0 0 8px #48c774}.pi svg{width:100%;height:100%;display:block;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}.pi:hover svg{transform:scale(1.08)}
 .pi .cp{display:flex;justify-content:space-between;gap:1rem;margin-top:.7rem;font:400 .74rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--silver)}
 .pi .cp a{text-decoration:none;color:inherit;transition:color .3s}
 .pi:hover .cp b,.pi .cp a:hover b{color:var(--candle)}.pi .cp b{font-weight:400;transition:.3s}
@@ -330,13 +334,14 @@ var CONFIG={
  exploring:["Add what you’re learning right now","Add a project you’re curious about"],
  slides:[["Projects","Websites and apps built from imagination."],["Speeches","Words shaped for the stage."],["Poems & art","Verses and visuals written after dark."]],
    projects:[
-   {t:"Khath & Co.",d:"A bespoke digital letter-writing space with handcrafted envelope unfolding, digital wax seals, and tactile vintage stationery.",c:"Digital Experiences",tech:["React","Motion","Web Typography","Editorial UI"],live:"https://khath-and-co.vercel.app",git:"https://github.com/Afshaan-shaik/khat-and-co"},
-   {t:"The Artisan’s Quill",d:"A curated digital sanctuary and exhibition celebrating visual arts, poetry, and illustration with ambient lighting and vaulted aesthetics.",c:"Creative Projects",tech:["Next.js","Canvas API","Framer Motion","Dark Aesthetic"],live:"https://the-artisans-quill.vercel.app",git:"https://github.com/Afshaan-shaik/Artisan-s-Quill-"},
-   {t:"CineStock",d:"An analog cinema and VHS film lab featuring 24 authentic vintage stocks, grain dials, and color-grading reel simulation.",c:"Creative Projects",tech:["WebGL","Video","CSS Shaders","Analog UI"],live:"https://cinnestock.vercel.app",git:"https://github.com/Afshaan-shaik/CineStock"},
-   {t:"ScaleLink",d:"A production-grade distributed URL engine and real-time analytics pipeline designed for rapid keyboard-first workflows across desktop and mobile.",c:"Development",tech:["TypeScript","Vite","REST APIs","Monospace UI"],live:"https://scale-link-six.vercel.app",git:"https://github.com/Afshaan-shaik/scale-link"},
-   {t:"Swiftly",d:"A premium same-day and hyperlocal express delivery platform exploring real-time kinetic maps, cartographic routing, and spatial clarity.",c:"Experiments",tech:["JavaScript","Leaflet / Mapbox","GeoJSON","Spatial UI"],live:"https://swiftly-afshu.vercel.app",git:"https://github.com/Afshaan-shaik/swiftly"}],
+    {t:"Khath & Co.",d:"A bespoke digital letter-writing space with handcrafted envelope unfolding, digital wax seals, and tactile vintage stationery.",c:"Digital Experiences",tech:["React","Motion","Web Typography","Editorial UI"],live:"https://khath-and-co.vercel.app",git:"https://github.com/Afshaan-shaik/khat-and-co",img:"assets/projects/khath.png"},
+    {t:"The Artisan’s Quill",d:"A curated digital sanctuary and exhibition celebrating visual arts, poetry, and illustration with ambient lighting and vaulted aesthetics.",c:"Creative Projects",tech:["Next.js","Canvas API","Framer Motion","Dark Aesthetic"],live:"https://the-artisans-quill.vercel.app",git:"https://github.com/Afshaan-shaik/Artisan-s-Quill-",img:"assets/projects/quill.png"},
+    {t:"CineStock",d:"An analog cinema and VHS film lab featuring 24 authentic vintage stocks, grain dials, and color-grading reel simulation.",c:"Creative Projects",tech:["WebGL","Video","CSS Shaders","Analog UI"],live:"https://cinnestock.vercel.app",git:"https://github.com/Afshaan-shaik/CineStock",img:"assets/projects/cinestock.png"},
+    {t:"ScaleLink",d:"A production-grade distributed URL engine and real-time analytics pipeline designed for rapid keyboard-first workflows across desktop and mobile.",c:"Development",tech:["TypeScript","Vite","REST APIs","Monospace UI"],live:"https://scale-link-six.vercel.app",git:"https://github.com/Afshaan-shaik/scale-link",img:"assets/projects/scalelink.png"},
+    {t:"Swiftly",d:"A premium same-day and hyperlocal express delivery platform exploring real-time kinetic maps, cartographic routing, and spatial clarity.",c:"Experiments",tech:["JavaScript","Leaflet / Mapbox","GeoJSON","Spatial UI"],live:"https://swiftly-afshu.vercel.app",git:"https://github.com/Afshaan-shaik/swiftly",img:"assets/projects/swiftly.png"}
+  ],
 
- journey:[{date:"Present",title:"Master of Computer Applications",d:"Add your university and years.",cat:"Education"}],
+  journey:[{date:"Present",title:"Master of Computer Applications",d:"Add your university and years.",cat:"Education"}],
  skills:{"Frontend development":["HTML","CSS","JavaScript"],"Programming languages":["Add your languages"],"Frameworks & libraries":["Add your frameworks"],"Design & UI/UX":["UI / UX design","Illustration"],"Tools & platforms":["Add your tools"],"Creative skills":["Poetry","Public speaking","Film editing"]},
  certs:[],
  gallery:[["Midnight Window","Visual Concepts"],["Lamp & Pages","Illustrations"],["Ink Garden","Digital Art"],["First Light","Photography"],["Slow Motion Study","Motion Experiments"],["Quiet Hours","Writing and Poetry"],["Constellation Study","Digital Art"],["Burnt Edges","Visual Concepts"]],
@@ -529,8 +534,9 @@ function rp(){
 
  $("pg").innerHTML=L.length?L.map(function(x,k){
   var p=x[0],n=String(x[1]+1).padStart(2,"0");
+  var visualHtml = p.img ? '<img src="'+p.img+'" alt="'+p.t+' — Live Project Front UI" loading="lazy"><span class="live-badge"><i class="live-dot"></i>LIVE APP</span>' : projectVisual(p,x[1],400,500);
   return '<article class="pi" onclick="if(!event.target.closest(\'a\'))window.open(\''+p.live+'\',\'_blank\',\'noopener\')">'+
-   '<div class="im" style="aspect-ratio:'+RT[x[1]%4]+'">'+projectVisual(p,x[1],400,500)+'</div>'+
+   '<div class="im" style="aspect-ratio:16/10">'+visualHtml+'</div>'+
    '<div class="cp"><b><a href="'+p.live+'" target="_blank" rel="noopener">'+p.t+'</a></b><span>'+n+'</span></div>'+
    '<div class="mt">'+p.c+' · '+p.tech.join(" / ")+'</div>'+
    '<p>'+p.d+'</p>'+
