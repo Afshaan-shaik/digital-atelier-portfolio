@@ -45,10 +45,17 @@ section{position:relative;z-index:2;padding:clamp(3.5rem,9vw,8.5rem) 0 0}
 .serif em,h2 em{font-style:italic;color:var(--candle)}
 .hand{font-family:'Caveat','Segoe Script',cursive;color:var(--candle)}
 h2{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,6.5vw,5rem);line-height:1.06;letter-spacing:-.01em;overflow-wrap:break-word}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:46px;padding:.68rem 1.45rem;border:1px solid var(--gold);color:var(--ivory);background:transparent;text-decoration:none;font:400 .7rem var(--mono);letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:.4s;max-width:100%;text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:46px;padding:.68rem 1.45rem;border:1px solid var(--gold);color:var(--fg);background:transparent;text-decoration:none;font:400 .7rem var(--mono);letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:.4s;max-width:100%;text-align:center}
 .btn:hover{background:var(--gold);color:var(--mid)}
 .btn.pill{border-radius:99px;padding:.75rem 1.75rem}.btn.fill{background:var(--candle);border-color:var(--candle);color:var(--mid)}
-.btn.fill:hover{background:var(--ivory);color:var(--mid)}
+.btn.fill:hover{background:var(--fg);color:var(--bg)}
+body[data-d="1"] .btn.fill{color:#f3f1e8}
+body[data-d="1"] .btn:hover{color:#f3f1e8}
+body[data-d="1"] .ct .btn{color:var(--ivory)}
+body[data-d="1"] .ct .btn.fill{color:var(--mid)}
+body[data-d="1"] .pi .cp{color:var(--fg)}
+body[data-d="1"] .pi .mt{color:var(--mut)}
+body[data-d="1"] .tl-link{color:var(--mut)}
 .btn[disabled]{opacity:.55;cursor:wait}
 .tl-link{font:400 .7rem var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--silver);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;border-bottom:1px solid transparent;transition:.3s}
 .tl-link:hover{color:var(--candle);border-color:var(--candle)}
@@ -286,7 +293,7 @@ body:not(.is-admin) .admin-only{display:none!important}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}#intro h1,#intro .role,#intro .st,#intro .q,#intro .acts{opacity:1}html{scroll-behavior:auto}}
 </style>
 </head>
-<body class="lock" data-d="3">
+<body class="lock" data-d="1">
 <div id="stars" aria-hidden="true"></div><div id="dust" aria-hidden="true"></div>
 
 <div id="intro" role="dialog" aria-label="Introduction">
@@ -323,9 +330,9 @@ body:not(.is-admin) .admin-only{display:none!important}
 <div class="hint">CHOOSE THE HOUR · SCROLL TO WANDER</div>
 <div class="tod" id="tod" role="group" aria-label="Choose time of day">
   <button type="button">Dawn</button>
-  <button type="button">Day</button>
+  <button type="button" class="on" aria-pressed="true">Day</button>
   <button type="button">Dusk</button>
-  <button type="button" class="on">Night</button>
+  <button type="button">Night</button>
 </div>
 </header>
 <div class="wrap"><div class="stats" id="stats"></div></div>
@@ -482,7 +489,7 @@ $("top").onclick=function(){scrollTo({top:0,behavior:RM?"auto":"smooth"})};
 function typer(n,l,sp){var q=0,c=0,del=false,tm;n.classList.add("on");if(RM){n.textContent=l[0];n.classList.remove("on");return{stop:function(){}}}
  (function s(){var t=l[q];c+=del?-1:1;n.textContent=t.slice(0,c);var d=del?22:sp;if(!del&&c===t.length){del=true;d=2400}else if(del&&c===0){del=false;q=(q+1)%l.length;d=500}tm=setTimeout(s,d)})();return{stop:function(){clearTimeout(tm);n.classList.remove("on")}}}
 var it=typer($("iq"),C.quotes,55);
-function enter(){it.stop();$("intro").classList.add("gone");document.body.classList.remove("lock");setTimeout(function(){$("intro").style.display="none"},1200)}
+function enter(){it.stop();setD(1);$("intro").classList.add("gone");document.body.classList.remove("lock");setTimeout(function(){$("intro").style.display="none"},1200)}
 $("enter").onclick=enter;$("skip").onclick=enter;
 
 /* mood & fireflies */
@@ -501,7 +508,7 @@ if($("tod")){
     b.onclick=function(){setD(i)};
   });
 }
-setD(window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches?1:3);
+setD(1);
 var cv=$("ff");
 if(cv){
   var cx=cv.getContext("2d"),P=[],mx=-1,my=-1;
