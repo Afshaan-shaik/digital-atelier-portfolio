@@ -207,9 +207,9 @@ body[data-d="1"] .hint{color:#16352a}
 .sk{margin-top:2rem;border-top:1px solid var(--line)}
 .sk .r{display:grid;gap:.45rem 2rem;padding:1.2rem 0;border-bottom:1px solid var(--line)}
 @media(min-width:768px){.sk .r{grid-template-columns:240px 1fr;padding:1.3rem 0}}
-.sk ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.2rem .9rem;font:300 clamp(1.05rem,2.5vw,1.45rem) var(--serif)}
-@media(min-width:768px){.sk ul{gap:.2rem 1.4rem}}
-.sk li{transition:.3s;cursor:default;position:relative;padding:.1rem 0}.sk li:hover{color:var(--candle);transform:translateX(3px)}
+.sk ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.35rem .9rem;font:300 clamp(1.05rem,2.5vw,1.45rem) var(--serif)}
+@media(min-width:768px){.sk ul{gap:.4rem 1.4rem}}
+.sk li{transition:.3s;cursor:default;position:relative;padding:.1rem 0;white-space:nowrap}.sk li:hover{color:var(--candle);transform:translateX(3px)}
 .sk li::after{content:"/";margin-left:.9rem;color:var(--line)}
 @media(min-width:768px){.sk li::after{margin-left:1.4rem}}
 .sk li:last-child::after{content:""}
@@ -328,7 +328,7 @@ footer .cp{margin-top:1.75rem;color:var(--mut);font:400 .66rem var(--mono);lette
 <div class="fl" id="fl" role="group" aria-label="Filter projects"></div><div id="pg" class="pgrid" aria-live="polite"></div></div></section>
 
 <section id="journey"><div class="wrap rv"><div class="mono">(04) — Journey</div><h2 style="margin-top:.8rem">My <em>journey</em></h2><div class="jr" id="jr"></div></div></section>
-<section id="skills"><div class="wrap rv"><div class="mono">(05) — Toolkit</div><h2 style="margin-top:.8rem">Skills &amp; <em>technologies</em></h2><div class="sk" id="sk"></div><p class="note">Some entries are placeholders — rename them in CONFIG.</p></div></section>
+<section id="skills"><div class="wrap rv"><div class="mono">(05) — Toolkit</div><h2 style="margin-top:.8rem">Skills &amp; <em>technologies</em></h2><div class="sk" id="sk"></div></div></section>
 <section id="creds"><div class="wrap rv"><div class="mono">(06) — Certifications &amp; achievements</div><div id="cr"></div></div></section>
 <section id="creative"><div class="wrap rv"><div class="mono">(07) — Creative space</div><h2 style="margin-top:.8rem">The midnight <em>gallery</em></h2><p class="note">Placeholder artwork drawn in code until your own pieces are added in CONFIG.</p><div class="fl" id="gf" role="group" aria-label="Filter gallery"></div><div class="gal" id="gl2"></div></div></section>
 <section id="testi" hidden><div class="wrap"><div class="mono">Kind words</div><div id="tt"></div></div></section>
@@ -375,8 +375,8 @@ var CONFIG={
     {t:"Swiftly",d:"A premium same-day and hyperlocal express delivery platform exploring real-time kinetic maps, cartographic routing, and spatial clarity.",c:"Experiments",tech:["JavaScript","Leaflet / Mapbox","GeoJSON","Spatial UI"],live:"https://swiftly-afshu.vercel.app",git:"https://github.com/Afshaan-shaik/swiftly",img:"assets/projects/swiftly.jpg"}
   ],
 
-  journey:[{date:"Present",title:"Master of Computer Applications",d:"Add your university and years.",cat:"Education"}],
- skills:{"Frontend development":["HTML","CSS","JavaScript"],"Programming languages":["C++","Java","Python","CSS","React","Golang","JavaScript"],"Frameworks & libraries":["Next.js","React","Framer Motion","Bootstrap","Tailwind CSS","Node.js","Vite","Leaflet"],"Design & UI/UX":["UI / UX design","Illustration"],"Tools & platforms":["Add your tools"],"Creative skills":["Poetry","Public speaking","Film editing"]},
+  journey:[{date:"Present",title:"Master of Computer Applications",d:"KLE MCA, Hubballi · Present",cat:"Education"}],
+ skills:{"Frontend development":["HTML","CSS","JavaScript"],"Programming languages":["C++","Java","Python","Golang","JavaScript","TypeScript"],"Frameworks & libraries":["Next.js","React","Framer Motion","Bootstrap","Tailwind CSS","Node.js","Vite","Leaflet"],"Design & UI/UX":["UI / UX design","Illustration"],"Tools & platforms":["Git","GitHub","GitHub Actions","Docker","AWS","Vercel","Cloudflare","Supabase","PostgreSQL","Firebase","Postman","Figma","VS Code"],"Creative skills":["Poetry","Public speaking","Film editing"]},
  certs:[],
  gallery:[["Midnight Window","Visual Concepts"],["Lamp & Pages","Illustrations"],["Ink Garden","Digital Art"],["First Light","Photography"],["Slow Motion Study","Motion Experiments"],["Quiet Hours","Writing and Poetry"],["Constellation Study","Digital Art"],["Burnt Edges","Visual Concepts"]],
  testimonials:[]
@@ -583,7 +583,7 @@ function rp(){
 }
 rp();
 /* journey / skills / creds */
-$("jr").innerHTML=C.journey.map(function(j){return'<div class="it"><span class="mono">'+j.date+' · '+j.cat+'</span><div><h3>'+j.title+'</h3><p>'+j.d+'</p></div></div>'}).join("")+'<div class="it"><span class="mono">Next</span><p>More chapters — internships, milestones and achievements — appear here as they’re added.</p></div>';
+$("jr").innerHTML=C.journey.map(function(j){return'<div class="it"><span class="mono">'+j.date+' · '+j.cat+'</span><div><h3>'+j.title+'</h3><p>'+j.d+'</p></div></div>'}).join("");
 $("sk").innerHTML=Object.keys(C.skills).map(function(k){return'<div class="r"><span class="mono">'+k+'</span><ul>'+C.skills[k].map(function(s){return"<li>"+s+"</li>"}).join("")+'</ul></div>'}).join("");
 $("cr").innerHTML=C.certs.length?'<h2 style="margin-top:.8rem">Credentials &amp; <em>achievements</em></h2><div class="cr">'+C.certs.map(function(c,i){return'<div class="c1"><b class="serif" style="font-size:1.5rem">'+c.name+'</b><span style="color:var(--mut)">'+c.org+' · '+c.date+'<br>'+c.d+'</span><span>'+(c.img?'<button class="btn" data-c="'+i+'">View</button>':'')+(c.verify?' <a class="tl-link" href="'+c.verify+'" target="_blank" rel="noopener">Verify ↗</a>':'')+'</span></div>'}).join("")+'</div>':'<p class="note" style="margin-top:.6rem">Certificates and achievements will appear here once they’re added to CONFIG.</p>';
 /* lightbox */
