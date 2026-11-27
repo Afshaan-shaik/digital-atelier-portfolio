@@ -568,7 +568,7 @@ function rp(){
 
  $("pg").innerHTML=L.length?L.map(function(x,k){
   var p=x[0],n=String(x[1]+1).padStart(2,"0");
-  var visualHtml = p.img ? '<img src="'+p.img+'" alt="'+p.t+' — Live Project Front UI" loading="lazy"><span class="live-badge"><i class="live-dot"></i>LIVE APP</span>' : projectVisual(p,x[1],400,500);
+  var visualHtml = p.img ? '<img src="'+p.img+'" alt="'+p.t+' — Live Project Front UI" decoding="async" onerror="this.onerror=null;this.parentElement.innerHTML=projectVisual(C.projects['+x[1]+'],'+x[1]+',400,500);"><span class="live-badge"><i class="live-dot"></i>LIVE APP</span>' : projectVisual(p,x[1],400,500);
   return '<article class="pi" onclick="if(!event.target.closest(\'a\'))window.open(\''+p.live+'\',\'_blank\',\'noopener\')">'+
    '<div class="im" style="aspect-ratio:16/9">'+visualHtml+'</div>'+
    '<div class="cp"><b><a href="'+p.live+'" target="_blank" rel="noopener">'+p.t+'</a></b><span>'+n+'</span></div>'+
