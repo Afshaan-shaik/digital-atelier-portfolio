@@ -266,6 +266,23 @@ footer .stars{letter-spacing:.8em;color:var(--gold);margin:1.2rem 0 .4rem;font-s
 footer nav{display:flex;flex-wrap:wrap;gap:.2rem 1.2rem;justify-content:center;margin-top:1.2rem}
 footer .cp{margin-top:1.75rem;color:var(--mut);font:400 .66rem var(--mono);letter-spacing:.09em;line-height:1.6}
 #top{position:fixed;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:40;background:var(--char);border:1px solid var(--line);color:var(--ivory);opacity:0;pointer-events:none;transition:.4s}#top.show{opacity:1;pointer-events:auto}
+/* admin mode (hidden from public visitors unless unlocked) */
+body:not(.is-admin) .admin-only{display:none!important}
+#adm-btn.on{color:var(--candle);border-color:var(--candle);background:rgba(229,189,132,.12)}
+#adm-auth,#adm-panel{position:fixed;inset:0;z-index:110;background:rgba(5,5,8,.88);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:1rem;overflow-y:auto}
+#adm-auth.open,#adm-panel.open{display:flex}
+.adm-box{width:100%;max-width:420px;background:var(--ink);color:var(--ivory);border:1px solid var(--line);border-radius:10px;padding:clamp(1.3rem,4vw,2rem);box-shadow:0 24px 60px rgba(0,0,0,.6)}
+#adm-panel .adm-box{max-width:680px;max-height:88dvh;overflow-y:auto}
+.adm-box h3{font:300 clamp(1.5rem,4vw,2rem) var(--serif);margin-bottom:.35rem}
+.adm-box .mono{color:var(--candle);margin-bottom:.9rem;display:block}
+.adm-fld{margin-top:.85rem}
+.adm-fld label{display:block;font:400 .64rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--silver);margin-bottom:.3rem}
+.adm-fld input,.adm-fld textarea,.adm-fld select{width:100%;min-height:42px;padding:.55rem .75rem;background:var(--mid);color:var(--ivory);border:1px solid var(--line);border-radius:4px;font:300 .94rem var(--sans)}
+.adm-fld textarea{min-height:76px;resize:vertical}
+.adm-acts{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.15rem;align-items:center}
+.adm-acts .btn{min-height:42px;padding:.5rem 1.1rem;font-size:.66rem}
+.adm-err{color:#f87171;font-size:.82rem;min-height:1.2em;margin-top:.45rem}
+.adm-sep{border:0;border-top:1px solid var(--line);margin:1.25rem 0}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}#intro h1,#intro .role,#intro .st,#intro .q,#intro .acts{opacity:1}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -281,7 +298,7 @@ footer .cp{margin-top:1.75rem;color:var(--mut);font:400 .66rem var(--mono);lette
 
 
 <header id="hd"><a class="logo" href="#home" data-s id="lg">Afshaan Shaikh</a><nav class="d" aria-label="Primary" id="dn"></nav>
-<div class="tools"><button class="ib" id="th" aria-label="Toggle mood theme">◐</button><button class="ib burger" id="bg" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><div><span></span><span></span><span></span></div></button></div></header>
+<div class="tools"><button class="ib" id="th" aria-label="Toggle mood theme">◐</button><button class="ib" id="adm-btn" aria-label="Admin mode" title="Admin mode"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button><button class="ib burger" id="bg" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><div><span></span><span></span><span></span></div></button></div></header>
 <div id="menu" aria-hidden="true"></div>
 
 <main>
@@ -314,12 +331,12 @@ footer .cp{margin-top:1.75rem;color:var(--mut);font:400 .66rem var(--mono);lette
 <div class="wrap"><div class="stats" id="stats"></div></div>
 
 <section class="ab" id="about" style="padding-top:clamp(3rem,9vw,7rem)"><div class="acard rv"><div class="anav"><a href="#about" data-s>About</a><a href="#ab-int" data-s>Interests</a><a href="#ab-exp" data-s>Currently exploring</a><a href="#projects" data-s>Work</a><a href="#contact" data-s>Contact</a></div>
-<div class="ag"><div class="pf"><div class="pimg" id="pi"></div><div class="pcap">Afshaan Shaikh — replace with your own portrait.</div>
-<div class="ed"><div class="row"><button class="b2" id="up">Upload photo</button><input type="file" id="pfile" accept="image/jpeg,image/png,image/webp" hidden><button class="b2" id="rm" hidden>Remove</button></div>
+<div class="ag"><div class="pf"><div class="pimg" id="pi"></div><div class="pcap" id="pcap">Afshaan Shaikh — Creative Technologist</div>
+<div class="ed admin-only"><div class="row"><button class="b2" id="up">Upload photo</button><input type="file" id="pfile" accept="image/jpeg,image/png,image/webp" hidden><button class="b2" id="rm" hidden>Remove</button></div>
 <div id="pend" hidden><div class="row"><span class="mono" style="color:#5a4f40">Preview — keep it?</span><button class="b2 fill" id="sv">Save</button><button class="b2" id="cn">Cancel</button></div></div>
 <label>Horizontal <input type="range" id="px" min="0" max="100" value="50" aria-label="Photo horizontal position"></label>
 <label>Vertical <input type="range" id="py" min="0" max="100" value="30" aria-label="Photo vertical position"></label>
-<small>Photos are saved in this browser only (IndexedDB) and don’t sync across devices. A remote storage hook is listed in the README notes.</small></div></div>
+<small>Admin only — photos save in this browser (IndexedDB) on this device.</small></div></div>
 <div class="at"><div class="eb">About me</div><h2>Curiosity is where every <em>creation</em> begins.</h2>
 <p id="bio1"></p><p id="bio2"></p><h3 id="ab-int">Interests</h3><div class="chips" id="chips"></div><h3>Creative philosophy</h3><p id="phil"></p><h3 id="ab-exp">Currently exploring</h3><ul id="expl"></ul></div></div></div></section>
 
@@ -329,8 +346,8 @@ footer .cp{margin-top:1.75rem;color:var(--mut);font:400 .66rem var(--mono);lette
 
 <section id="journey"><div class="wrap rv"><div class="mono">(04) — Journey</div><h2 style="margin-top:.8rem">My <em>journey</em></h2><div class="jr" id="jr"></div></div></section>
 <section id="skills"><div class="wrap rv"><div class="mono">(05) — Toolkit</div><h2 style="margin-top:.8rem">Skills &amp; <em>technologies</em></h2><div class="sk" id="sk"></div></div></section>
-<section id="creds"><div class="wrap rv"><div class="mono">(06) — Certifications &amp; achievements</div><div id="cr"></div></div></section>
-<section id="creative"><div class="wrap rv"><div class="mono">(07) — Creative space</div><h2 style="margin-top:.8rem">The midnight <em>gallery</em></h2><p class="note">Placeholder artwork drawn in code until your own pieces are added in CONFIG.</p><div class="fl" id="gf" role="group" aria-label="Filter gallery"></div><div class="gal" id="gl2"></div></div></section>
+<section id="creds" hidden><div class="wrap rv"><div class="mono">(06) — Certifications &amp; achievements</div><div id="cr"></div></div></section>
+<section id="creative"><div class="wrap rv"><div class="mono">(07) — Creative space</div><h2 style="margin-top:.8rem">The midnight <em>gallery</em></h2><p class="note">Visual studies, midnight sketches, poetry, and light experiments.</p><div class="fl" id="gf" role="group" aria-label="Filter gallery"></div><div class="gal" id="gl2"></div></div></section>
 <section id="testi" hidden><div class="wrap"><div class="mono">Kind words</div><div id="tt"></div></div></section>
 
 <div class="ct" id="contact"><div class="mono">(08) — Contact</div>
@@ -351,6 +368,45 @@ footer .cp{margin-top:1.75rem;color:var(--mut);font:400 .66rem var(--mono);lette
 <button class="ib" id="top" aria-label="Back to top">↑</button>
 <div id="lb" role="dialog" aria-modal="true" aria-label="Viewer"><button class="ib c" aria-label="Close">✕</button><button class="ib p" aria-label="Previous">‹</button><figure><div id="lbi"></div><figcaption id="lbc"></figcaption></figure><button class="ib n" aria-label="Next">›</button></div>
 
+<div id="adm-auth" role="dialog" aria-modal="true" aria-label="Admin passcode">
+ <div class="adm-box">
+  <span class="mono">Private Studio Access</span>
+  <h3>Admin <em>mode</em></h3>
+  <p style="font-size:.9rem;color:var(--silver)">Enter your passcode to unlock local editing controls on this device.</p>
+  <form id="adm-form" novalidate>
+   <div class="adm-fld"><label for="adm-pass">Passcode</label><input id="adm-pass" type="password" autocomplete="current-password" placeholder="Enter passcode"></div>
+   <div class="adm-err" id="adm-err" role="alert"></div>
+   <div class="adm-acts"><button class="btn fill" type="submit">Unlock</button><button class="btn" type="button" id="adm-cancel">Cancel</button></div>
+  </form>
+ </div>
+</div>
+
+<div id="adm-panel" role="dialog" aria-modal="true" aria-label="Admin editor">
+ <div class="adm-box">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem">
+   <div><span class="mono" style="margin-bottom:.2rem">Admin Mode Active (This Browser Only)</span><h3>Edit <em>portfolio</em></h3></div>
+   <button class="ib" id="adm-close" aria-label="Close admin panel" style="border:1px solid var(--line)">✕</button>
+  </div>
+  <div class="adm-fld"><label for="ed-hl">Hero Headline</label><input id="ed-hl"></div>
+  <div class="adm-fld"><label for="ed-b1">About Bio — Paragraph 1</label><textarea id="ed-b1"></textarea></div>
+  <div class="adm-fld"><label for="ed-b2">About Bio — Paragraph 2</label><textarea id="ed-b2"></textarea></div>
+  <div class="adm-fld"><label for="ed-phil">Creative Philosophy</label><input id="ed-phil"></div>
+  <div class="adm-fld"><label for="ed-exp">Currently Exploring (comma-separated)</label><input id="ed-exp"></div>
+  <hr class="adm-sep">
+  <span class="mono" style="margin-bottom:.4rem">Quick Add to Toolkit / Journey</span>
+  <div class="adm-fld"><label for="ed-sk-cat">Add Skill to Category</label><div style="display:flex;gap:.5rem;flex-wrap:wrap"><select id="ed-sk-cat" style="flex:1;min-width:160px"></select><input id="ed-sk-val" placeholder="e.g. GraphQL" style="flex:1;min-width:140px"><button class="btn" type="button" id="ed-sk-add" style="min-height:42px;padding:.4rem .9rem">Add</button></div></div>
+  <div class="adm-fld"><label>Add Journey Chapter</label><div style="display:grid;gap:.45rem"><div style="display:flex;gap:.5rem;flex-wrap:wrap"><input id="ed-jr-date" placeholder="Date (e.g. 2026)" style="flex:1;min-width:120px"><input id="ed-jr-cat" placeholder="Category (e.g. Milestone)" style="flex:1;min-width:120px"></div><input id="ed-jr-title" placeholder="Title"><input id="ed-jr-desc" placeholder="Description"><button class="btn" type="button" id="ed-jr-add" style="justify-self:start;min-height:40px;padding:.4rem .9rem">Add Chapter</button></div></div>
+  <hr class="adm-sep">
+  <div class="adm-acts">
+   <button class="btn fill" type="button" id="adm-save">Save Changes</button>
+   <button class="btn" type="button" id="adm-export">Copy CONFIG JSON</button>
+   <button class="btn" type="button" id="adm-reset">Reset Local Edits</button>
+   <button class="btn" type="button" id="adm-lock" style="margin-left:auto">Lock Admin</button>
+  </div>
+  <div class="adm-err" id="adm-msg" style="color:var(--candle)"></div>
+ </div>
+</div>
+
 <script>
 /* ======= CONFIG — single source of truth ======= */
 var CONFIG={
@@ -362,10 +418,10 @@ var CONFIG={
  closing:"Between the stars and the stories, I create my own universe.",
  email:"afshaan100@gmail.com",endpoint:"",
  socials:{github:"https://github.com/Afshaan-shaik",instagram:"https://www.instagram.com/_thenameisshaan/",linkedin:"https://www.linkedin.com/in/afshaanshaikh"},
- bio:["I’m Afshaan — an MCA student, an artist and a builder of web projects. I write poems, deliver speeches, edit films and paint, and I love turning those instincts into digital experiences.","Replace this paragraph with your own biography — where you started, what you make and what you want to build next."],
+ bio:["I’m Afshaan — an MCA student, an artist and a builder of web projects. I write poems, deliver speeches, edit films and paint, and I love turning those instincts into digital experiences.","Currently pursuing an MCA at KLE MCA, Hubballi, I craft atmospheric web experiences, distributed tools, and expressive interfaces that feel calm, intentional, and human."],
  philosophy:"Start with a feeling, then find the technology that carries it.",
  interests:["Web development","Technology","UI/UX design","Creative experimentation","Digital art","Building meaningful digital products"],
- exploring:["Add what you’re learning right now","Add a project you’re curious about"],
+ exploring:["Distributed systems & scalable web architectures","WebGL shaders, generative visuals & motion design","TypeScript, Golang & full-stack product craft"],
  slides:[["Projects","Websites and apps built from imagination."],["Speeches","Words shaped for the stage."],["Poems & art","Verses and visuals written after dark."]],
    projects:[
     {t:"Khath & Co.",d:"A bespoke digital letter-writing space with handcrafted envelope unfolding, digital wax seals, and tactile vintage stationery.",c:"Digital Experiences",tech:["React","Motion","Web Typography","Editorial UI"],live:"https://khath-and-co.vercel.app",git:"https://github.com/Afshaan-shaik/khat-and-co",img:"assets/projects/khath.png"},
@@ -383,7 +439,16 @@ var CONFIG={
 };
 /* ================================================ */
 function $(i){return document.getElementById(i)}
-var RM=matchMedia("(prefers-reduced-motion: reduce)").matches,C=CONFIG;
+var RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+var BASE_CONFIG=JSON.parse(JSON.stringify(CONFIG)),C=CONFIG;
+var ADM_HASH="52f34dae3cf56a1f7af7e38133bad38aee5550c8c504e8bfed8eb10b02ce54ce";
+var isAdmin=false;
+try{
+ isAdmin=localStorage.getItem("pf_adm")==="1";
+ var savedCfg=localStorage.getItem("pf_cfg");
+ if(isAdmin&&savedCfg){Object.assign(C,JSON.parse(savedCfg))}
+}catch(e){isAdmin=false}
+if(isAdmin)document.body.classList.add("is-admin");
 function idb(cb){try{var r=indexedDB.open("pf",1);r.onupgradeneeded=function(){r.result.createObjectStore("k")};r.onsuccess=function(){cb(r.result)};r.onerror=function(){cb(null)}}catch(e){cb(null)}}
 function iget(k,f){idb(function(d){if(!d)return f(null);try{var q=d.transaction("k").objectStore("k").get(k);q.onsuccess=function(){f(q.result||null)};q.onerror=function(){f(null)}}catch(e){f(null)}})}
 function iset(k,v){idb(function(d){if(!d)return;try{var t=d.transaction("k","readwrite").objectStore("k");v==null?t.delete(k):t.put(v,k)}catch(e){}})}
@@ -391,10 +456,13 @@ function iset(k,v){idb(function(d){if(!d)return;try{var t=d.transaction("k","rea
 for(var i=0;i<70;i++){var s=document.createElement("i");s.style.cssText="left:"+Math.random()*100+"%;top:"+Math.random()*100+"%;animation-delay:"+Math.random()*4+"s;animation-duration:"+(3+Math.random()*4)+"s";$("stars").appendChild(s)}
 if(!RM)for(i=0;i<14;i++){var dd=document.createElement("i");dd.style.cssText="left:"+Math.random()*100+"%;animation-delay:"+Math.random()*18+"s;animation-duration:"+(15+Math.random()*10)+"s";$("dust").appendChild(dd)}
 /* text */
-if($("in"))$("in").textContent=C.name;if($("ir"))$("ir").textContent=C.role;if($("is"))$("is").textContent=C.statement;
-if($("lg"))$("lg").textContent=C.name;if($("hl"))$("hl").textContent=C.headline;if($("hi"))$("hi").textContent=C.intro;
-$("bio1").textContent=C.bio[0];$("bio2").textContent=C.bio[1];$("phil").textContent=C.philosophy;$("fq").textContent="“"+C.closing+"”";$("yr").textContent=new Date().getFullYear();
-$("chips").innerHTML=C.interests.map(function(t){return"<span>"+t+"</span>"}).join("");$("expl").innerHTML=C.exploring.map(function(t){return"<li>"+t+"</li>"}).join("");
+function renderText(){
+ if($("in"))$("in").textContent=C.name;if($("ir"))$("ir").textContent=C.role;if($("is"))$("is").textContent=C.statement;
+ if($("lg"))$("lg").textContent=C.name;if($("hl"))$("hl").textContent=C.headline;if($("hi"))$("hi").textContent=C.intro;
+ $("bio1").textContent=C.bio[0];$("bio2").textContent=C.bio[1];$("phil").textContent=C.philosophy;$("fq").textContent="“"+C.closing+"”";$("yr").textContent=new Date().getFullYear();
+ $("chips").innerHTML=C.interests.map(function(t){return"<span>"+t+"</span>"}).join("");$("expl").innerHTML=C.exploring.map(function(t){return"<li>"+t+"</li>"}).join("");
+}
+renderText();
 /* nav */
 var NAV=[["home","Home"],["about","About"],["projects","Projects"],["journey","Journey"],["skills","Skills"],["creative","Creative Space"],["contact","Contact"]];
 $("dn").innerHTML=NAV.map(function(n,i){return'<a href="#'+n[0]+'" data-s><b>0'+(i+1)+'</b>'+n[1]+'</a>'}).join("");
@@ -488,11 +556,11 @@ function scene(k){var W=1000,H=520,b='<svg viewBox="0 0 1000 520" preserveAspect
  return b+'</svg>'}
 /* stats (genuine / derived) */
 $("stats").innerHTML=[["Projects shown",String(C.projects.length).padStart(2,"0")],["Areas of interest",String(C.interests.length).padStart(2,"0")],["Currently studying","MCA"],["Disciplines","Code · Art · Words"]].map(function(s){return'<div><span class="mono">'+s[0]+'</span><b>'+s[1]+'</b></div>'}).join("");
-/* about editor */
-var PH='<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="18" fill="#9c8d72"/><path d="M14 100q4-38 36-38t36 38Z" fill="#9c8d72"/></svg><span>Your portrait appears here.<br>Upload a JPG, PNG or WEBP.</span>';
+/* about editor (admin only) */
+function phHtml(){return '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="18" fill="#9c8d72"/><path d="M14 100q4-38 36-38t36 38Z" fill="#9c8d72"/></svg><span>'+(isAdmin?'Admin Mode — upload a JPG, PNG or WEBP portrait below.':'Afshaan Shaikh')+'</span>';}
 var IMG=null,pend=null;
 function pos(){return $("px").value+"% "+$("py").value+"%"}
-function showImg(src){$("pi").innerHTML=src?'<img alt="Portrait of Afshaan Shaikh" src="'+src+'" style="object-position:'+pos()+'">':PH;$("rm").hidden=!IMG}
+function showImg(src){$("pi").innerHTML=src?'<img alt="Portrait of Afshaan Shaikh" src="'+src+'" style="object-position:'+pos()+'">':phHtml();$("rm").hidden=!IMG}
 iget("img",function(v){if(v){IMG=v;iget("pos",function(p){if(p){$("px").value=p[0];$("py").value=p[1]}showImg(IMG)})}else showImg(null)});
 $("up").onclick=function(){$("pfile").click()};
 $("pfile").onchange=function(){var f=$("pfile").files[0];if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)){alert("Please choose a JPG, PNG or WEBP image.");return}var r=new FileReader();r.onload=function(){pend=r.result;showImg(pend);$("pend").hidden=false};r.readAsDataURL(f);$("pfile").value=""};
@@ -583,9 +651,125 @@ function rp(){
 }
 rp();
 /* journey / skills / creds */
-$("jr").innerHTML=C.journey.map(function(j){return'<div class="it"><span class="mono">'+j.date+' · '+j.cat+'</span><div><h3>'+j.title+'</h3><p>'+j.d+'</p></div></div>'}).join("");
-$("sk").innerHTML=Object.keys(C.skills).map(function(k){return'<div class="r"><span class="mono">'+k+'</span><ul>'+C.skills[k].map(function(s){return"<li>"+s+"</li>"}).join("")+'</ul></div>'}).join("");
-$("cr").innerHTML=C.certs.length?'<h2 style="margin-top:.8rem">Credentials &amp; <em>achievements</em></h2><div class="cr">'+C.certs.map(function(c,i){return'<div class="c1"><b class="serif" style="font-size:1.5rem">'+c.name+'</b><span style="color:var(--mut)">'+c.org+' · '+c.date+'<br>'+c.d+'</span><span>'+(c.img?'<button class="btn" data-c="'+i+'">View</button>':'')+(c.verify?' <a class="tl-link" href="'+c.verify+'" target="_blank" rel="noopener">Verify ↗</a>':'')+'</span></div>'}).join("")+'</div>':'<p class="note" style="margin-top:.6rem">Certificates and achievements will appear here once they’re added to CONFIG.</p>';
+function renderMeta(){
+ $("jr").innerHTML=C.journey.map(function(j){return'<div class="it"><span class="mono">'+j.date+' · '+j.cat+'</span><div><h3>'+j.title+'</h3><p>'+j.d+'</p></div></div>'}).join("");
+ $("sk").innerHTML=Object.keys(C.skills).map(function(k){return'<div class="r"><span class="mono">'+k+'</span><ul>'+C.skills[k].map(function(s){return"<li>"+s+"</li>"}).join("")+'</ul></div>'}).join("");
+ if($("creds"))$("creds").hidden=!C.certs.length&&!isAdmin;
+ $("cr").innerHTML=C.certs.length?'<h2 style="margin-top:.8rem">Credentials &amp; <em>achievements</em></h2><div class="cr">'+C.certs.map(function(c,i){return'<div class="c1"><b class="serif" style="font-size:1.5rem">'+c.name+'</b><span style="color:var(--mut)">'+c.org+' · '+c.date+'<br>'+c.d+'</span><span>'+(c.img?'<button class="btn" data-c="'+i+'">View</button>':'')+(c.verify?' <a class="tl-link" href="'+c.verify+'" target="_blank" rel="noopener">Verify ↗</a>':'')+'</span></div>'}).join("")+'</div>':(isAdmin?'<p class="note" style="margin-top:.6rem">Admin Mode — no credentials added yet.</p>':'');
+}
+renderMeta();
+/* admin mode */
+async function sha256(str){
+ var buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(str));
+ return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+}
+function syncAdminUI(){
+ document.body.classList.toggle("is-admin",isAdmin);
+ if($("adm-btn")){
+  $("adm-btn").classList.toggle("on",isAdmin);
+  $("adm-btn").setAttribute("aria-label",isAdmin?"Open admin editor (unlocked)":"Admin mode (locked)");
+  $("adm-btn").title=isAdmin?"Admin mode unlocked — click to edit":"Admin mode";
+ }
+ if($("pcap"))$("pcap").textContent=isAdmin?"Afshaan Shaikh — local portrait editor (visible to you only)":"Afshaan Shaikh — Creative Technologist";
+ showImg(pend||IMG);
+ renderMeta();
+}
+function openAdminPanel(){
+ $("ed-hl").value=C.headline||"";
+ $("ed-b1").value=C.bio[0]||"";
+ $("ed-b2").value=C.bio[1]||"";
+ $("ed-phil").value=C.philosophy||"";
+ $("ed-exp").value=(C.exploring||[]).join(", ");
+ $("ed-sk-cat").innerHTML=Object.keys(C.skills).map(function(k){return'<option value="'+k+'">'+k+'</option>'}).join("");
+ $("adm-msg").textContent="";
+ $("adm-panel").classList.add("open");
+ document.body.classList.add("lock");
+}
+function closeAdminModals(){
+ $("adm-auth").classList.remove("open");
+ $("adm-panel").classList.remove("open");
+ if(!$("menu").classList.contains("open")&&!$("lb").classList.contains("open"))document.body.classList.remove("lock");
+}
+if($("adm-btn")){
+ $("adm-btn").onclick=function(){
+  if(isAdmin){openAdminPanel();return}
+  $("adm-err").textContent="";$("adm-pass").value="";
+  $("adm-auth").classList.add("open");
+  document.body.classList.add("lock");
+  setTimeout(function(){$("adm-pass").focus()},50);
+ };
+}
+$("adm-cancel").onclick=closeAdminModals;
+$("adm-close").onclick=closeAdminModals;
+$("adm-auth").onclick=function(e){if(e.target===$("adm-auth"))closeAdminModals()};
+$("adm-panel").onclick=function(e){if(e.target===$("adm-panel"))closeAdminModals()};
+$("adm-form").onsubmit=async function(e){
+ e.preventDefault();
+ var val=$("adm-pass").value.trim();
+ if(!val){$("adm-err").textContent="Please enter your passcode.";return}
+ var h=await sha256(val);
+ if(h===ADM_HASH){
+  isAdmin=true;
+  try{
+   localStorage.setItem("pf_adm","1");
+   var s=localStorage.getItem("pf_cfg");
+   if(s)Object.assign(C,JSON.parse(s));
+  }catch(err){}
+  renderText();syncAdminUI();closeAdminModals();openAdminPanel();
+ }else{
+  $("adm-err").textContent="Incorrect passcode.";
+ }
+};
+$("adm-save").onclick=function(){
+ C.headline=$("ed-hl").value.trim()||C.headline;
+ C.bio=[$("ed-b1").value.trim()||C.bio[0],$("ed-b2").value.trim()||C.bio[1]];
+ C.philosophy=$("ed-phil").value.trim()||C.philosophy;
+ var exp=$("ed-exp").value.split(",").map(function(x){return x.trim()}).filter(Boolean);
+ if(exp.length)C.exploring=exp;
+ try{localStorage.setItem("pf_cfg",JSON.stringify(C))}catch(err){}
+ renderText();renderMeta();
+ $("adm-msg").textContent="Saved locally on this browser/device.";
+};
+$("ed-sk-add").onclick=function(){
+ var cat=$("ed-sk-cat").value,val=$("ed-sk-val").value.trim();
+ if(!cat||!val)return;
+ if(!C.skills[cat])C.skills[cat]=[];
+ if(C.skills[cat].indexOf(val)===-1)C.skills[cat].push(val);
+ $("ed-sk-val").value="";
+ try{localStorage.setItem("pf_cfg",JSON.stringify(C))}catch(err){}
+ renderMeta();
+ $("adm-msg").textContent='Added "'+val+'" to '+cat+".";
+};
+$("ed-jr-add").onclick=function(){
+ var dt=$("ed-jr-date").value.trim()||"Present",ct=$("ed-jr-cat").value.trim()||"Milestone",ti=$("ed-jr-title").value.trim(),ds=$("ed-jr-desc").value.trim();
+ if(!ti)return;
+ C.journey.unshift({date:dt,cat:ct,title:ti,d:ds});
+ $("ed-jr-date").value="";$("ed-jr-cat").value="";$("ed-jr-title").value="";$("ed-jr-desc").value="";
+ try{localStorage.setItem("pf_cfg",JSON.stringify(C))}catch(err){}
+ renderMeta();
+ $("adm-msg").textContent='Added journey chapter "'+ti+'".';
+};
+$("adm-export").onclick=function(){
+ var txt=JSON.stringify(C,null,2);
+ if(navigator.clipboard&&navigator.clipboard.writeText){
+  navigator.clipboard.writeText(txt).then(function(){$("adm-msg").textContent="CONFIG JSON copied to clipboard."}).catch(function(){$("adm-msg").textContent="Copy failed — check browser permissions."});
+ }else{$("adm-msg").textContent="Clipboard unavailable in this browser."}
+};
+$("adm-reset").onclick=function(){
+ try{localStorage.removeItem("pf_cfg")}catch(err){}
+ C=JSON.parse(JSON.stringify(BASE_CONFIG));
+ CONFIG=C;
+ renderText();renderMeta();openAdminPanel();
+ $("adm-msg").textContent="Local overrides cleared — restored site defaults.";
+};
+$("adm-lock").onclick=function(){
+ isAdmin=false;
+ try{localStorage.removeItem("pf_adm")}catch(err){}
+ C=JSON.parse(JSON.stringify(BASE_CONFIG));
+ CONFIG=C;
+ renderText();syncAdminUI();closeAdminModals();
+};
+syncAdminUI();
 /* lightbox */
 var LB={a:[],i:0,op:null};
 function lbShow(i){LB.i=(i+LB.a.length)%LB.a.length;$("lbi").innerHTML=LB.a[LB.i].h;$("lbc").textContent=LB.a[LB.i].c}
@@ -593,7 +777,7 @@ function lbOpen(a,i,op){LB.a=a;LB.op=op;lbShow(i);$("lb").classList.add("open");
 function lbClose(){$("lb").classList.remove("open");document.body.classList.remove("lock");if(LB.op)LB.op.focus()}
 $("lb").querySelector(".c").onclick=lbClose;$("lb").querySelector(".p").onclick=function(){lbShow(LB.i-1)};$("lb").querySelector(".n").onclick=function(){lbShow(LB.i+1)};
 $("lb").onclick=function(e){if(e.target===$("lb"))lbClose()};
-document.addEventListener("keydown",function(e){if($("lb").classList.contains("open")){if(e.key==="Escape")lbClose();if(e.key==="ArrowLeft")lbShow(LB.i-1);if(e.key==="ArrowRight")lbShow(LB.i+1)}else if(e.key==="Escape"&&$("menu").classList.contains("open"))menu(false)});
+document.addEventListener("keydown",function(e){if($("adm-auth").classList.contains("open")||$("adm-panel").classList.contains("open")){if(e.key==="Escape")closeAdminModals()}else if($("lb").classList.contains("open")){if(e.key==="Escape")lbClose();if(e.key==="ArrowLeft")lbShow(LB.i-1);if(e.key==="ArrowRight")lbShow(LB.i+1)}else if(e.key==="Escape"&&$("menu").classList.contains("open"))menu(false)});
 $("cr").onclick=function(e){var b=e.target.closest("[data-c]");if(!b)return;lbOpen(C.certs.map(function(c){return{h:'<img alt="'+c.name+'" src="'+c.img+'">',c:c.name}}),+b.dataset.c,b)};
 /* gallery */
 var gc="All",gcats=["All","Digital Art","Illustrations","Motion Experiments","Photography","Visual Concepts","Writing and Poetry"];
