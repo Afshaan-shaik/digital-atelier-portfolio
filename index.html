@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Afshaan Shaikh — Personal Portfolio / Creative Technologist</title>
-<meta name="description" content="Afshaan Shaikh — developer, creative thinker and digital creator. Projects, speeches, poems and art.">
-<meta property="og:title" content="Afshaan Shaikh — Creative Technologist">
+<title>Afshaan Shaikh — Software Engineer &amp; Creative Technologist</title>
+<meta name="description" content="Afshaan Shaikh — Software Engineer &amp; Creative Technologist. Full-stack systems, digital experiences, and creative experiments.">
+<meta property="og:title" content="Afshaan Shaikh — Software Engineer &amp; Creative Technologist">
 <meta property="og:description" content="Building digital experiences with imagination beyond the interface.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://afshaanshaikh.vercel.app/">
@@ -120,6 +120,8 @@ body[data-d="1"] .sky .title{color:#16352a;text-shadow:none}
 body[data-d="1"] .sky h1 em{color:#2f7a5a}
 .sky .hl{font-family:var(--sans);font-weight:300;max-width:34rem;margin:.95rem auto 0;font-size:clamp(.95rem,2.6vw,1.32rem);line-height:1.45;opacity:.92}
 .sky .acts{display:flex;gap:.55rem .9rem;justify-content:center;align-items:center;margin-top:1.4rem;flex-wrap:wrap}
+.sky .acts .btn.pill:not(.fill){background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border-color:rgba(197,165,116,.55)}
+body[data-d="1"] .sky .acts .btn.pill:not(.fill){background:rgba(255,255,255,.5);border-color:rgba(47,122,90,.45)}
 @media(max-width:575.98px){.sky .acts .btn.pill{padding:.6rem 1.15rem;min-height:42px;font-size:.64rem;letter-spacing:.12em}}
 .tod{position:absolute;bottom:calc(1.35rem + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:.25rem;padding:.3rem;border-radius:99px;background:rgba(0,0,0,.42);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.22);box-shadow:0 10px 30px rgba(0,0,0,.3);max-width:calc(100vw - 1.5rem)}
 .tod button{font:400 .68rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#fff;background:none;border:0;padding:.5rem .95rem;border-radius:99px;cursor:pointer;transition:.3s;white-space:nowrap}
@@ -247,7 +249,7 @@ body[data-d="1"] .hint{color:#16352a}
 #em{overflow-wrap:anywhere;text-transform:lowercase;letter-spacing:.08em}
 .cs{display:grid;gap:1.25rem;margin-top:clamp(2rem,6vw,4.5rem);padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.12)}
 @media(min-width:768px){.cs{grid-template-columns:repeat(3,1fr);gap:1.4rem}}
-.cs b{display:block;font:300 clamp(1.35rem,3vw,2rem) var(--serif);margin-top:.3rem}.cs .dt{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--candle);margin-right:.5rem}
+.cs b{display:block;font:300 clamp(1.15rem,2.4vw,1.65rem)/1.25 var(--serif);margin-top:.35rem;overflow-wrap:break-word}.cs .dt{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--candle);margin-right:.5rem;vertical-align:middle}
 .letter{background:var(--parch);color:#2a2118;padding:clamp(1.2rem,4vw,2.6rem);max-width:760px;margin:clamp(2rem,5vw,4rem) 0 0;box-shadow:inset 0 0 60px rgba(120,70,20,.2)}
 .fld{margin-top:1rem}.fld label{display:block;font:400 .68rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#5a3a1c}
 .fld input,.fld textarea{width:100%;min-height:48px;margin-top:.3rem;padding:.7rem .9rem;background:#fbf5e8;color:#1c150d;border:1px solid #8a6a3c;font:400 1rem var(--sans);border-radius:2px}
@@ -293,7 +295,7 @@ body:not(.is-admin) .admin-only{display:none!important}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}#intro h1,#intro .role,#intro .st,#intro .q,#intro .acts{opacity:1}html{scroll-behavior:auto}}
 </style>
 </head>
-<body class="lock" data-d="1">
+<body class="lock" data-d="3">
 <div id="stars" aria-hidden="true"></div><div id="dust" aria-hidden="true"></div>
 
 <div id="intro" role="dialog" aria-label="Introduction">
@@ -313,13 +315,14 @@ body:not(.is-admin) .admin-only{display:none!important}
 <canvas id="ff"></canvas>
 <div class="orb"></div>
 <div class="title">
-  <div class="kick">Personal Portfolio • Creative Technologist</div>
+  <div class="kick">Software Engineer • Creative Technologist</div>
   <h1>Afshaan <em>Shaikh</em></h1>
   <p class="hl" id="hl">Building digital experiences, with imagination beyond the interface.</p>
   <div class="acts">
     <a class="btn pill fill" href="#projects" data-s>Explore My Work</a>
     <a class="btn pill" href="#about" data-s>About Me</a>
     <a class="btn pill" href="#contact" data-s>Get In Touch</a>
+    <a class="btn pill" id="res-cta" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume ↗</a>
   </div>
 </div>
 <svg class="mountains" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
@@ -330,9 +333,9 @@ body:not(.is-admin) .admin-only{display:none!important}
 <div class="hint">CHOOSE THE HOUR · SCROLL TO WANDER</div>
 <div class="tod" id="tod" role="group" aria-label="Choose time of day">
   <button type="button">Dawn</button>
-  <button type="button" class="on" aria-pressed="true">Day</button>
+  <button type="button">Day</button>
   <button type="button">Dusk</button>
-  <button type="button">Night</button>
+  <button type="button" class="on" aria-pressed="true">Night</button>
 </div>
 </header>
 <div class="wrap"><div class="stats" id="stats"></div></div>
@@ -353,15 +356,14 @@ body:not(.is-admin) .admin-only{display:none!important}
 
 <section id="journey"><div class="wrap rv"><div class="mono">(04) — Journey</div><h2 style="margin-top:.8rem">My <em>journey</em></h2><div class="jr" id="jr"></div></div></section>
 <section id="skills"><div class="wrap rv"><div class="mono">(05) — Toolkit</div><h2 style="margin-top:.8rem">Skills &amp; <em>technologies</em></h2><div class="sk" id="sk"></div></div></section>
-<section id="creds" hidden><div class="wrap rv"><div class="mono">(06) — Certifications &amp; achievements</div><div id="cr"></div></div></section>
-<section id="creative"><div class="wrap rv"><div class="mono">(07) — Creative space</div><h2 style="margin-top:.8rem">The midnight <em>gallery</em></h2><p class="note">Visual studies, midnight sketches, poetry, and light experiments.</p><div class="fl" id="gf" role="group" aria-label="Filter gallery"></div><div class="gal" id="gl2"></div></div></section>
+<section id="creative"><div class="wrap rv"><div class="mono">(06) — Creative space</div><h2 style="margin-top:.8rem">The midnight <em>gallery</em></h2><p class="note">Visual studies, midnight sketches, poetry, and light experiments.</p><div class="fl" id="gf" role="group" aria-label="Filter gallery"></div><div class="gal" id="gl2"></div></div></section>
 <section id="testi" hidden><div class="wrap"><div class="mono">Kind words</div><div id="tt"></div></div></section>
 
-<div class="ct" id="contact"><div class="mono">(08) — Contact</div>
+<div class="ct" id="contact"><div class="mono">(07) — Contact</div>
 <h2>Every interesting idea deserves a <em>conversation.</em></h2>
-<p class="sub">Have an idea, a collaboration or simply a thought worth sharing? I’d love to hear from you.</p>
+<p class="sub">Have an idea, a role, or simply a thought worth sharing? I’d love to hear from you.</p>
 <div class="acts"><a class="btn pill fill" href="#cf-n" id="start">Start a conversation →</a><a class="btn pill" id="em" hidden></a></div>
-<div class="cs"><div><span class="mono">Open to</span><b>Collaborations</b></div><div><span class="mono">Availability</span><b><i class="dt"></i>Open for ideas</b></div><div><span class="mono">Best way to reach</span><b>A short message</b></div></div>
+<div class="cs"><div><span class="mono">Open to</span><b id="ct-open">Full-Time SWE &amp; Frontend Roles</b></div><div><span class="mono">Availability</span><b id="ct-avail"><i class="dt"></i>Immediate / Open to Relocation</b></div><div><span class="mono">Best way to reach</span><b>A short message</b></div></div>
 <form class="letter" id="cf" novalidate>
 <div class="fld"><label for="cf-n">Name</label><input id="cf-n" autocomplete="name"><div class="err" id="en"></div></div>
 <div class="fld"><label for="cf-e">Email</label><input id="cf-e" type="email" autocomplete="email"><div class="err" id="ee"></div></div>
@@ -423,7 +425,8 @@ var CONFIG={
  intro:"I’m a creative thinker and aspiring developer exploring the intersection of technology, design and artistic expression.",
  quotes:["Between the stars and the stories, I create my own universe.","Not everything beautiful needs to be explained. Some things are meant to be created.","Every interface begins with imagination."],
  closing:"Between the stars and the stories, I create my own universe.",
- email:"afshaan100@gmail.com",endpoint:"",
+ email:"afshaan100@gmail.com",endpoint:"",resumeUrl:"/resume.pdf",
+ openTo:"Full-Time SWE & Frontend Roles",availability:"Immediate / Open to Relocation",
  socials:{github:"https://github.com/Afshaan-shaik",instagram:"https://www.instagram.com/_thenameisshaan/",linkedin:"https://www.linkedin.com/in/afshaanshaikh"},
  bio:["I’m Afshaan — an MCA student, an artist and a builder of web projects. I write poems, deliver speeches, edit films and paint, and I love turning those instincts into digital experiences.","Currently pursuing an MCA at KLE MCA, Hubballi, I craft atmospheric web experiences, distributed tools, and expressive interfaces that feel calm, intentional, and human."],
  philosophy:"Start with a feeling, then find the technology that carries it.",
@@ -466,6 +469,9 @@ if(!RM)for(i=0;i<14;i++){var dd=document.createElement("i");dd.style.cssText="le
 function renderText(){
  if($("in"))$("in").textContent=C.name;if($("ir"))$("ir").textContent=C.role;if($("is"))$("is").textContent=C.statement;
  if($("lg"))$("lg").textContent=C.name;if($("hl"))$("hl").textContent=C.headline;if($("hi"))$("hi").textContent=C.intro;
+ if($("res-cta"))$("res-cta").href=C.resumeUrl||"/resume.pdf";
+ if($("ct-open")&&C.openTo)$("ct-open").textContent=C.openTo;
+ if($("ct-avail")&&C.availability)$("ct-avail").innerHTML='<i class="dt"></i>'+C.availability;
  $("bio1").textContent=C.bio[0];$("bio2").textContent=C.bio[1];$("phil").textContent=C.philosophy;$("fq").textContent="“"+C.closing+"”";$("yr").textContent=new Date().getFullYear();
  $("chips").innerHTML=C.interests.map(function(t){return"<span>"+t+"</span>"}).join("");$("expl").innerHTML=C.exploring.map(function(t){return"<li>"+t+"</li>"}).join("");
 }
@@ -489,7 +495,7 @@ $("top").onclick=function(){scrollTo({top:0,behavior:RM?"auto":"smooth"})};
 function typer(n,l,sp){var q=0,c=0,del=false,tm;n.classList.add("on");if(RM){n.textContent=l[0];n.classList.remove("on");return{stop:function(){}}}
  (function s(){var t=l[q];c+=del?-1:1;n.textContent=t.slice(0,c);var d=del?22:sp;if(!del&&c===t.length){del=true;d=2400}else if(del&&c===0){del=false;q=(q+1)%l.length;d=500}tm=setTimeout(s,d)})();return{stop:function(){clearTimeout(tm);n.classList.remove("on")}}}
 var it=typer($("iq"),C.quotes,55);
-function enter(){it.stop();setD(1);$("intro").classList.add("gone");document.body.classList.remove("lock");setTimeout(function(){$("intro").style.display="none"},1200)}
+function enter(){it.stop();$("intro").classList.add("gone");document.body.classList.remove("lock");setTimeout(function(){$("intro").style.display="none"},1200)}
 $("enter").onclick=enter;$("skip").onclick=enter;
 
 /* mood & fireflies */
@@ -508,7 +514,7 @@ if($("tod")){
     b.onclick=function(){setD(i)};
   });
 }
-setD(1);
+setD(3);
 var cv=$("ff");
 if(cv){
   var cx=cv.getContext("2d"),P=[],mx=-1,my=-1;
@@ -657,12 +663,10 @@ function rp(){
  }).join(""):'<div class="empty">Nothing on this shelf yet — the next idea is still being written.</div>';
 }
 rp();
-/* journey / skills / creds */
+/* journey / skills */
 function renderMeta(){
  $("jr").innerHTML=C.journey.map(function(j){return'<div class="it"><span class="mono">'+j.date+' · '+j.cat+'</span><div><h3>'+j.title+'</h3><p>'+j.d+'</p></div></div>'}).join("");
  $("sk").innerHTML=Object.keys(C.skills).map(function(k){return'<div class="r"><span class="mono">'+k+'</span><ul>'+C.skills[k].map(function(s){return"<li>"+s+"</li>"}).join("")+'</ul></div>'}).join("");
- if($("creds"))$("creds").hidden=!C.certs.length&&!isAdmin;
- $("cr").innerHTML=C.certs.length?'<h2 style="margin-top:.8rem">Credentials &amp; <em>achievements</em></h2><div class="cr">'+C.certs.map(function(c,i){return'<div class="c1"><b class="serif" style="font-size:1.5rem">'+c.name+'</b><span style="color:var(--mut)">'+c.org+' · '+c.date+'<br>'+c.d+'</span><span>'+(c.img?'<button class="btn" data-c="'+i+'">View</button>':'')+(c.verify?' <a class="tl-link" href="'+c.verify+'" target="_blank" rel="noopener">Verify ↗</a>':'')+'</span></div>'}).join("")+'</div>':(isAdmin?'<p class="note" style="margin-top:.6rem">Admin Mode — no credentials added yet.</p>':'');
 }
 renderMeta();
 /* admin mode */
@@ -785,7 +789,6 @@ function lbClose(){$("lb").classList.remove("open");document.body.classList.remo
 $("lb").querySelector(".c").onclick=lbClose;$("lb").querySelector(".p").onclick=function(){lbShow(LB.i-1)};$("lb").querySelector(".n").onclick=function(){lbShow(LB.i+1)};
 $("lb").onclick=function(e){if(e.target===$("lb"))lbClose()};
 document.addEventListener("keydown",function(e){if($("adm-auth").classList.contains("open")||$("adm-panel").classList.contains("open")){if(e.key==="Escape")closeAdminModals()}else if($("lb").classList.contains("open")){if(e.key==="Escape")lbClose();if(e.key==="ArrowLeft")lbShow(LB.i-1);if(e.key==="ArrowRight")lbShow(LB.i+1)}else if(e.key==="Escape"&&$("menu").classList.contains("open"))menu(false)});
-$("cr").onclick=function(e){var b=e.target.closest("[data-c]");if(!b)return;lbOpen(C.certs.map(function(c){return{h:'<img alt="'+c.name+'" src="'+c.img+'">',c:c.name}}),+b.dataset.c,b)};
 /* gallery */
 var gc="All",gcats=["All","Digital Art","Illustrations","Motion Experiments","Photography","Visual Concepts","Writing and Poetry"];
 $("gf").innerHTML=gcats.map(function(c,i){return'<button class="'+(i?'':'on')+'" aria-pressed="'+!i+'">'+c+'</button>'}).join("");
